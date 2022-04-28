@@ -15,7 +15,8 @@
                         <form>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="input-group input-group-outline my-3">
+                                    <div class="input-group input-group-static my-3">
+                                        <label for="name">Name</label>
                                         <input type="text" wire:model.defer='name' value="{{ old('name') }}"
                                             class="form-control  @error('name') is-invalid @enderror"
                                             placeholder="Enter Name">
@@ -27,7 +28,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="input-group input-group-outline my-3">
+                                    <div class="input-group input-group-static my-3">
+                                        <label for="email">Email</label>
                                         <input type="text" wire:model.defer='email' value="{{ old('email') }}"
                                             class="form-control  @error('email') is-invalid @enderror"
                                             placeholder="Enter Email">
@@ -39,7 +41,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="input-group input-group-outline my-3">
+                                    <div class="input-group input-group-static my-3">
+                                        <label for="address">Address</label>
                                         <textarea wire:model.defer='address' class="form-control  @error('address') is-invalid @enderror"
                                             placeholder="Enter Address" rows="5">{{ old('address') }}</textarea>
                                         @error('address')
@@ -50,7 +53,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="input-group input-group-outline my-3">
+                                    <div class="input-group input-group-static my-3">
+                                        <label for="note">Note</label>
                                         <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror" placeholder="Enter Note"
                                             rows="5">{{ old('note') }}</textarea>
                                         @error('note')

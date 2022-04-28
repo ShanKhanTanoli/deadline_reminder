@@ -5,11 +5,20 @@ namespace App\Http\Livewire\User\Dashboard\Deadlines\Edit;
 use Exception;
 use Livewire\Component;
 use App\Helpers\User\User;
+use App\Helpers\Deadline\Deadline;
 use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
-    public $deadline, $customer_id, $name, $date, $amount, $renew_state, $type_of_renew, $note, $reminder;
+    public $deadline,
+        $customer_id,
+        $name,
+        $date,
+        $amount,
+        $renew_state,
+        $type_of_renew,
+        $note,
+        $reminder;
 
     public function mount($slug)
     {
@@ -51,8 +60,26 @@ class Index extends Component
                 'note' => 'required|string',
                 'reminder' => 'required|string|in:30_days_before,60_days_before',
             ]);
+
             try {
+
+                $data = [
+                    'deadline_id' => $this->deadline->id,
+                    'user_id' => $this->deadline->user_id,
+                    'customer_id' => $validated['customer_id'],
+                    'name' => $validated['name'],
+                    'date' => $validated['date'],
+                    'amount' => $validated['amount'],
+                    'renew_state' => $validated['renew_state'],
+                    'type_of_renew' => $validated['type_of_renew'],
+                    'note' => $validated['note'],
+                    'reminder' => $validated['reminder'],
+                ];
+
                 $this->deadline->update($validated);
+                if ($this->deadline->getChanges()) {
+                    Deadline::AddChronology($data);
+                }
                 session()->flash('success', 'Updated Successfully');
                 return redirect(route('UserEditDeadline', $this->deadline->slug));
             } catch (Exception $e) {

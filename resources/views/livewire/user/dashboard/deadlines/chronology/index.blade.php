@@ -1,8 +1,26 @@
 <div class="container-fluid">
     @include('errors.alerts')
     <div class="row mb-4">
-        <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
-            <a href="#">
+        <div class="col-xl-4 col-sm-4 mb-xl-0 mb-4">
+            <a href="{{ route('UserDeadlineChronology', $deadline->slug) }}">
+                <div class="card">
+                    <div class="card-header p-3 pt-2" style="border-radius: 0;">
+                        <div
+                            class="icon icon-lg icon-shape bg-gradient-primary shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                            <i class="fas fa-history opacity-10"></i>
+                        </div>
+                        <div class="text-end pt-1">
+                            <p class="text-sm mb-0 text-capitalize">Chronologies</p>
+                            <h4 class="mb-0">
+                                {{ Deadline::CountChronologies($deadline->id) }}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-4 col-sm-4 mb-xl-0 mb-4">
+            <a href="{{ route('UserDeadlines') }}">
                 <div class="card">
                     <div class="card-header p-3 pt-2" style="border-radius: 0;">
                         <div
@@ -10,7 +28,7 @@
                             <i class="fas fa-calendar-alt opacity-10"></i>
                         </div>
                         <div class="text-end pt-1">
-                            <p class="text-sm mb-0 text-capitalize">Deadlines</p>
+                            <p class="text-sm mb-0 text-capitalize">View Deadlines</p>
                             <h4 class="mb-0">
                                 {{ User::CountDeadlines(Auth::user()->id) }}
                             </h4>
@@ -19,7 +37,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-4 mb-xl-0 mb-4">
             <a href="{{ route('UserAddDeadline') }}">
                 <div class="card">
                     <div class="card-header p-3 pt-2" style="border-radius: 0;">
@@ -44,7 +62,7 @@
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">
-                            Deadlines
+                            {{ $deadline->name }} Chronologies
                         </h6>
                     </div>
                 </div>
@@ -71,17 +89,12 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Note
                                     </th>
-                                    <th
-                                        class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Customer
                                     </th>
                                     <th
                                         class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Chronologies
-                                    </th>
-                                    <th
-                                        class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Edit
+                                        View Customer
                                     </th>
                                     <th
                                         class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
@@ -90,13 +103,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($deadlines as $deadline)
+                                @foreach ($chronologies as $chronology)
                                     <tr>
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">
-                                                        {{ Str::substr($deadline->name, 0, 10) }}...
+                                                        {{ $chronology->name }}
                                                     </h6>
                                                 </div>
                                             </div>
@@ -105,7 +118,7 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">
-                                                        {{ date('d M Y', strtotime($deadline->date)) }}
+                                                        {{ date('d M Y', strtotime($chronology->created_at)) }}
                                                     </h6>
                                                 </div>
                                             </div>
@@ -114,7 +127,7 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">
-                                                        {{ $deadline->amount }}
+                                                        {{ $chronology->amount }}
                                                         {{ strtoupper(User::Currency(Auth::user()->id)) }}
                                                     </h6>
                                                 </div>
@@ -123,22 +136,22 @@
                                         <td class="text-center">
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    @if ($deadline->renew_state == 'to_renew')
+                                                    @if ($chronology->renew_state == 'to_renew')
                                                         <span class="badge bg-gradient-primary">
                                                             To Renew
                                                         </span>
                                                     @endif
-                                                    @if ($deadline->renew_state == 'waiting_cash')
+                                                    @if ($chronology->renew_state == 'waiting_cash')
                                                         <span class="badge bg-gradient-primary">
                                                             Waiting Cash
                                                         </span>
                                                     @endif
-                                                    @if ($deadline->renew_state == 'renewed')
+                                                    @if ($chronology->renew_state == 'renewed')
                                                         <span class="badge bg-gradient-success">
                                                             Renewed
                                                         </span>
                                                     @endif
-                                                    @if ($deadline->renew_state == 'deleted')
+                                                    @if ($chronology->renew_state == 'deleted')
                                                         <span class="badge bg-gradient-danger">
                                                             Deleted
                                                         </span>
@@ -149,32 +162,32 @@
                                         <td class="text-center">
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
-                                                    @if ($deadline->type_of_renew == 'domain')
+                                                    @if ($chronology->type_of_renew == 'domain')
                                                         <span class="badge bg-gradient-primary">
                                                             Domain
                                                         </span>
                                                     @endif
-                                                    @if ($deadline->type_of_renew == 'hosting')
+                                                    @if ($chronology->type_of_renew == 'hosting')
                                                         <span class="badge bg-gradient-primary">
                                                             Hosting
                                                         </span>
                                                     @endif
-                                                    @if ($deadline->type_of_renew == 'hosting_email')
+                                                    @if ($chronology->type_of_renew == 'hosting_email')
                                                         <span class="badge bg-gradient-primary">
                                                             Hosting Email
                                                         </span>
                                                     @endif
-                                                    @if ($deadline->type_of_renew == 'wpml')
+                                                    @if ($chronology->type_of_renew == 'wpml')
                                                         <span class="badge bg-gradient-primary">
                                                             wpml
                                                         </span>
                                                     @endif
-                                                    @if ($deadline->type_of_renew == 'privacy_cookie')
+                                                    @if ($chronology->type_of_renew == 'privacy_cookie')
                                                         <span class="badge bg-gradient-primary">
                                                             Privacy Cookie
                                                         </span>
                                                     @endif
-                                                    @if ($deadline->type_of_renew == 'other')
+                                                    @if ($chronology->type_of_renew == 'other')
                                                         <span class="badge bg-gradient-dark">
                                                             other
                                                         </span>
@@ -186,44 +199,42 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">
-                                                        {{ Str::substr($deadline->note, 0, 10) }}...
+                                                        {{ Str::substr($chronology->note,0, 12) }}...
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">
+                                                        @if ($customer = Customer::Find($chronology->customer_id))
+                                                            @if (strlen($customer->name) > 10)
+                                                                {{ $customer->name }}...
+                                                            @else
+                                                                {{ $customer->name }}
+                                                            @endif
+                                                        @else
+                                                            {{ __('DELETED') }}
+                                                        @endif
                                                     </h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="text-center">
                                             <button class="btn btn-sm btn-info"
-                                                wire:click='ViewCustomer("{{ $deadline->customer_id }}")'>
+                                                wire:click='ViewCustomer("{{ $chronology->customer_id }}")'>
                                                 <span wire:loading
-                                                    wire:target='ViewCustomer("{{ $deadline->customer_id }}")'
+                                                    wire:target='ViewCustomer("{{ $chronology->customer_id }}")'
                                                     class="spinner-border spinner-border-sm" role="status"
                                                     aria-hidden="true"></span>
                                                 View
-                                            </button>
-                                        </td>
-                                        <td class="text-center">
-                                            <button class="btn btn-sm btn-primary"
-                                                wire:click='ViewChronologies("{{ $deadline->id }}")'>
-                                                <span wire:loading
-                                                    wire:target='ViewChronologies("{{ $deadline->id }}")'
-                                                    class="spinner-border spinner-border-sm" role="status"
-                                                    aria-hidden="true"></span>
-                                                View
-                                            </button>
-                                        </td>
-                                        <td class="text-center">
-                                            <button class="btn btn-sm btn-success"
-                                                wire:click='Edit("{{ $deadline->id }}")'>
-                                                <span wire:loading wire:target='Edit("{{ $deadline->id }}")'
-                                                    class="spinner-border spinner-border-sm" role="status"
-                                                    aria-hidden="true"></span>
-                                                Edit
                                             </button>
                                         </td>
                                         <td class="text-center">
                                             <button class="btn btn-sm btn-danger"
-                                                wire:click='Delete("{{ $deadline->id }}")'>
-                                                <span wire:loading wire:target='Delete("{{ $deadline->id }}")'
+                                                wire:click='Delete("{{ $chronology->id }}")'>
+                                                <span wire:loading wire:target='Delete("{{ $chronology->id }}")'
                                                     class="spinner-border spinner-border-sm" role="status"
                                                     aria-hidden="true"></span>
                                                 Delete
@@ -236,7 +247,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    {{ $deadlines->render() }}
+                    {{ $chronologies->render() }}
                 </div>
             </div>
         </div>

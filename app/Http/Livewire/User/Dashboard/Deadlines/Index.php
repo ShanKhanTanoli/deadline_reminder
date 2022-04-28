@@ -37,6 +37,13 @@ class Index extends Component
         } else return session()->flash('error', 'No such customer found');
     }
 
+    public function ViewChronologies($id)
+    {
+        if ($deadline = User::FindDeadline(Auth::user()->id, $id)) {
+            return redirect(route('UserDeadlineChronology', $deadline->slug));
+        } else return session()->flash('error', 'No such deadline found');
+    }
+
     public function Delete($id)
     {
         if ($deadline = User::FindDeadline(Auth::user()->id, $id)) {

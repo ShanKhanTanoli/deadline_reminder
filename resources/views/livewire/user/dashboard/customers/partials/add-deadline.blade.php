@@ -1,108 +1,26 @@
-<div class="container-fluid">
-    @include('errors.alerts')
-    <div class="row mb-4">
-        <div class="col-xl-4 col-sm-4 mb-xl-0 mb-4">
-            <a href="{{ route('UserDeadlineChronology', $deadline->slug) }}">
-                <div class="card">
-                    <div class="card-header p-3 pt-2" style="border-radius: 0;">
-                        <div
-                            class="icon icon-lg icon-shape bg-gradient-primary shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                            <i class="fas fa-history opacity-10"></i>
-                        </div>
-                        <div class="text-end pt-1">
-                            <p class="text-sm mb-0 text-capitalize">Chronologies</p>
-                            <h4 class="mb-0">
-                                {{ Deadline::CountChronologies($deadline->id) }}
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xl-4 col-sm-4 mb-xl-0 mb-4">
-            @if ($customer = Customer::Find($deadline->customer_id))
-                <a href="{{ route('UserEditCustomer', $customer->slug) }}">
-                @else
-                    <a href="#">
-            @endif
-            <div class="card">
-                <div class="card-header p-3 pt-2" style="border-radius: 0;">
-                    <div
-                        class="icon icon-lg icon-shape bg-gradient-primary shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                        <i class="fas fa-edit opacity-10"></i>
-                    </div>
-                    <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">Edit</p>
-                        <h4 class="mb-0">
-                            Customer
-                        </h4>
-                    </div>
-                </div>
-            </div>
-            </a>
-        </div>
-        <div class="col-xl-4 col-sm-4 mb-xl-0 mb-4">
-            <a href="{{ route('UserAddDeadline') }}">
-                <div class="card">
-                    <div class="card-header p-3 pt-2" style="border-radius: 0;">
-                        <div
-                            class="icon icon-lg icon-shape bg-gradient-primary shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                            <i class="fas fa-plus opacity-10"></i>
-                        </div>
-                        <div class="text-end pt-1">
-                            <p class="text-sm mb-0 text-capitalize">Add New</p>
-                            <h4 class="mb-0">
-                                Deadline
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-12">
+    <!--Begin::Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
                         <h6 class="text-white text-capitalize ps-3">
-                            Update Deadline
+                            Add Deadline for {{ $customer->name }}
                         </h6>
                     </div>
                 </div>
                 <div class="card-body px-0 pb-2">
-                    <div class="container">
-                        <form>
+                    <form>
+                        <div class="container">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="input-group input-group-static my-3">
                                         <label for="name">Name</label>
                                         <input type="text" wire:model.defer='name' value="{{ old('name') }}"
                                             class="form-control  @error('name') is-invalid @enderror"
                                             placeholder="Enter Name">
                                         @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group input-group-static my-3">
-                                        <label for="select_customer">Select Customer</label>
-                                        <select wire:model.defer='customer_id'
-                                            class="form-control  @error('customer_id') is-invalid @enderror">
-                                            <option value="">Select Customer</option>
-                                            @if (User::CountCustomers(Auth::user()->id) > 0)
-                                                @foreach (User::Customers(Auth::user()->id)->get() as $customer)
-                                                    <option value="{{ $customer->id }}">{{ $customer->name }}
-                                                    </option>
-                                                @endforeach
-                                            @else
-                                                <option value="">No customer found</option>
-                                            @endif
-                                        </select>
-                                        @error('customer_id')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -178,7 +96,7 @@
                                     <div class="input-group input-group-static my-3">
                                         <label for="note">Note</label>
                                         <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror" placeholder="Enter Note"
-                                            rows="5">{{ old('note') }}</textarea>
+                                            rows="3">{{ old('note') }}</textarea>
                                         @error('note')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -205,8 +123,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-primary" wire:attr='disabled'
-                                        wire:click='Update'>
+                                    <button type="button" class="btn btn-primary" wire:attr='disabled' wire:click='Add'>
                                         <span wire:loading class="spinner-border spinner-border-sm" role="status"
                                             aria-hidden="true">
                                         </span>
@@ -214,10 +131,10 @@
                                     </button>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <!--End::Modal-->

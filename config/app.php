@@ -198,6 +198,7 @@ return [
         'User' => App\Helpers\User\User::class,
         'Customer' => App\Helpers\Customer\Customer::class,
         'Currency' => App\Helpers\Currency\Currency::class,
+        'Deadline' => App\Helpers\Deadline\Deadline::class,
 
     ])->toArray(),
 

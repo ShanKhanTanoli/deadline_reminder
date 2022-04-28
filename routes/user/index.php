@@ -15,6 +15,7 @@ use App\Http\Livewire\User\Dashboard\Customers\Deadlines\Index as CustomerDeadli
 use App\Http\Livewire\User\Dashboard\Deadlines\Index as Deadlines;
 use App\Http\Livewire\User\Dashboard\Deadlines\Add\Index as AddDeadline;
 use App\Http\Livewire\User\Dashboard\Deadlines\Edit\Index as EditDeadline;
+use App\Http\Livewire\User\Dashboard\Deadlines\Chronology\Index as DeadlineChronology;
 /*End::Deadlines*/
 
 /*Begin::Settings*/
@@ -44,9 +45,17 @@ Route::middleware(['auth', 'user'])->prefix('User')->group(function () {
     /*End::Customers*/
 
     /*Begin::Deadlines*/
-    Route::get('Deadlines', Deadlines::class)->name('UserDeadlines');
-    Route::get('AddDeadline', AddDeadline::class)->name('UserAddDeadline');
-    Route::get('EditDeadline/{slug}', EditDeadline::class)->name('UserEditDeadline');
+    Route::get('Deadlines', Deadlines::class)
+        ->name('UserDeadlines');
+
+    Route::get('AddDeadline', AddDeadline::class)
+        ->name('UserAddDeadline');
+
+    Route::get('EditDeadline/{slug}', EditDeadline::class)
+        ->name('UserEditDeadline');
+
+    Route::get('Deadline/{slug}/Chronology', DeadlineChronology::class)
+        ->name('UserDeadlineChronology');
     /*End::Deadlines*/
 
     /*Begin::Settings*/

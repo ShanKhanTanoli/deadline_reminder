@@ -4,13 +4,21 @@ namespace App\Http\Livewire\User\Dashboard\Deadlines\Add;
 
 use Exception;
 use Livewire\Component;
-use App\Models\Customer;
+use App\Models\Deadline;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
-    public $name, $email, $address, $note;
+    public
+        $customer_id,
+        $name,
+        $date,
+        $amount,
+        $renew_state,
+        $type_of_renew,
+        $note,
+        $reminder;
 
     public function render()
     {
@@ -21,23 +29,21 @@ class Index extends Component
     public function Add()
     {
         $validated = $this->validate([
+            'customer_id' => 'required|numeric',
             'name' => 'required|string',
-            'email' => 'required|email|unique:customers,email',
-            'address' => 'required|string',
+            'date' => 'required|date',
+            'amount' => 'required|numeric',
+            'renew_state' => 'required|string|in:to_renew,waiting_cash,renewed,deleted',
+            'type_of_renew' => 'required|string|in:domain,hosting,hosting_email,wpml,privacy_cookie,other',
             'note' => 'required|string',
+            'reminder' => 'required|string|in:30_days_before,60_days_before',
         ]);
         try {
             $data = [
                 'user_id' => Auth::user()->id,
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'address' => $validated['address'],
-                'note' => $validated['note'],
-                'role_id' => 2,
-                'role' => 'user',
                 'slug' => strtoupper(Str::random(20)),
             ];
-            Customer::create($data);
+            Deadline::create(array_merge($data,$validated));
             session()->flash('success', 'Added Successfully');
             return redirect(route('UserDeadlines'));
         } catch (Exception $e) {

@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
-            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <a href="{{ route('UserAddDeadline') }}">
                 <div class="card">
                     <div class="card-header p-3 pt-2" style="border-radius: 0;">
                         <div
@@ -53,7 +53,8 @@
                         <form>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="input-group input-group-outline my-3">
+                                    <div class="input-group input-group-static my-3">
+                                        <label for="name">Name</label>
                                         <input type="text" wire:model.defer='name' value="{{ old('name') }}"
                                             class="form-control  @error('name') is-invalid @enderror"
                                             placeholder="Enter Name">
@@ -65,7 +66,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="input-group input-group-outline my-3">
+                                    <div class="input-group input-group-static my-3">
+                                        <label for="email">Email</label>
                                         <input type="text" wire:model.defer='email' value="{{ old('email') }}"
                                             class="form-control  @error('email') is-invalid @enderror"
                                             placeholder="Enter Email">
@@ -77,7 +79,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="input-group input-group-outline my-3">
+                                    <div class="input-group input-group-static my-3">
+                                        <label for="address">Address</label>
                                         <textarea wire:model.defer='address' class="form-control  @error('address') is-invalid @enderror"
                                             placeholder="Enter Address" rows="5">{{ old('address') }}</textarea>
                                         @error('address')
@@ -88,7 +91,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="input-group input-group-outline my-3">
+                                    <div class="input-group input-group-static my-3">
+                                        <label for="note">Note</label>
                                         <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror" placeholder="Enter Note"
                                             rows="5">{{ old('note') }}</textarea>
                                         @error('note')
@@ -114,26 +118,4 @@
             </div>
         </div>
     </div>
-    <!--Begin::Modal-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title font-weight-normal" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn bg-gradient-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--End::Modal-->
 </div>

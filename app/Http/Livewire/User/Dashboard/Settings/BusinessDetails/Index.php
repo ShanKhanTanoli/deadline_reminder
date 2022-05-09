@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
-    public $business_name, $business_email, $business_phone, $business_address, $currency_id;
+    public $business_name, $business_email, $business_phone, $business_address;
 
     public function mount()
     {
@@ -18,7 +18,6 @@ class Index extends Component
             $this->business_email = $details->business_email;
             $this->business_phone = $details->business_phone;
             $this->business_address = $details->business_address;
-            $this->currency_id = $details->currency_id;
         } else {
             $this->business_name = "Home";
             $this->business_email = "Company Email";
@@ -45,7 +44,6 @@ class Index extends Component
             'business_email' => 'required|email',
             'business_phone' => 'required|numeric',
             'business_address' => 'required|string',
-            'currency_id' => 'required|numeric',
         ], $msg);
 
         if ($details = User::BusinessDetails(Auth::user()->id)) {

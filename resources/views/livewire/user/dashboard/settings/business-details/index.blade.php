@@ -51,7 +51,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="input-group input-group-static my-3">
                                                 <label for="business_phone">Business Phone</label>
                                                 <input type="text" wire:model.defer='business_phone'
@@ -65,34 +65,10 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="input-group input-group-static my-3">
-                                                <label for="currency_id">Currency</label>
-                                                <select wire:model.defer='currency_id'
-                                                    class="form-control  @error('currency_id') is-invalid @enderror">
-                                                    <option value="">Select Currency</option>
-                                                    @forelse (Currency::all() as $currency)
-                                                        <option value="{{ $currency->id }}">
-                                                            {{ strtoupper($currency->name) }}
-                                                        </option>
-                                                    @empty
-                                                        <option value="">No currency found</option>
-                                                    @endforelse
-                                                </select>
-                                                @error('currency_id')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
                                         <div class="col-md-12">
                                             <div class="input-group input-group-static my-3">
                                                 <label for="business_address">Business Address</label>
                                                 <textarea wire:model.defer='business_address' class="form-control  @error('business_address') is-invalid @enderror"
-                                                    cols="30" rows="10"
                                                     placeholder="Enter Business Address">{{ old('business_address') }}</textarea>
                                                 @error('business_address')
                                                     <span class="invalid-feedback" role="alert">

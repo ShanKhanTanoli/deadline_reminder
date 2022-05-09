@@ -192,14 +192,20 @@
                                             </div>
                                         </td>
                                         <td class="text-center">
-                                            <button class="btn btn-sm btn-info"
+                                            @if($customer = Customer::Find($deadline->customer_id))
+                                            <button class="btn btn-link mt-3"
                                                 wire:click='ViewCustomer("{{ $deadline->customer_id }}")'>
                                                 <span wire:loading
                                                     wire:target='ViewCustomer("{{ $deadline->customer_id }}")'
                                                     class="spinner-border spinner-border-sm" role="status"
                                                     aria-hidden="true"></span>
-                                                View
+                                                {{ $customer->name }}
                                             </button>
+                                            @else
+                                            <span class="badge bg-gradient-danger">
+                                                Not Found
+                                            </span>
+                                            @endif
                                         </td>
                                         <td class="text-center">
                                             <button class="btn btn-sm btn-primary"

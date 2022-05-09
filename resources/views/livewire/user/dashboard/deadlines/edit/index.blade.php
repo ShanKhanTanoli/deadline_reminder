@@ -1,7 +1,25 @@
 <div class="container-fluid">
     @include('errors.alerts')
     <div class="row mb-4">
-        <div class="col-xl-4 col-sm-4 mb-xl-0 mb-4">
+        <div class="col-xl-3 col-sm-3 mb-xl-0 mb-4">
+            <a href="{{ route('UserDeadlines') }}">
+                <div class="card">
+                    <div class="card-header p-3 pt-2" style="border-radius: 0;">
+                        <div
+                            class="icon icon-lg icon-shape bg-gradient-primary shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                            <i class="fas fa-arrow-left opacity-10"></i>
+                        </div>
+                        <div class="text-end pt-1">
+                            <p class="text-sm mb-0 text-capitalize">Go</p>
+                            <h4 class="mb-0">
+                                Back
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-3 col-sm-3 mb-xl-0 mb-4">
             <a href="{{ route('UserDeadlineChronology', $deadline->slug) }}">
                 <div class="card">
                     <div class="card-header p-3 pt-2" style="border-radius: 0;">
@@ -19,7 +37,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-xl-4 col-sm-4 mb-xl-0 mb-4">
+        <div class="col-xl-3 col-sm-3 mb-xl-0 mb-4">
             @if ($customer = Customer::Find($deadline->customer_id))
                 <a href="{{ route('UserEditCustomer', $customer->slug) }}">
                 @else
@@ -41,7 +59,7 @@
             </div>
             </a>
         </div>
-        <div class="col-xl-4 col-sm-4 mb-xl-0 mb-4">
+        <div class="col-xl-3 col-sm-3 mb-xl-0 mb-4">
             <a href="{{ route('UserAddDeadline') }}">
                 <div class="card">
                     <div class="card-header p-3 pt-2" style="border-radius: 0;">
@@ -177,8 +195,8 @@
                                 <div class="col-md-12">
                                     <div class="input-group input-group-static my-3">
                                         <label for="note">Note</label>
-                                        <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror" placeholder="Enter Note"
-                                            rows="5">{{ old('note') }}</textarea>
+                                        <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror"
+                                            placeholder="Enter Note">{{ old('note') }}</textarea>
                                         @error('note')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -186,24 +204,45 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="input-group input-group-static my-3">
-                                        <label for="reminder">Reminder</label>
-                                        <select wire:model.defer='reminder'
-                                            class="form-control  @error('reminder') is-invalid @enderror">
-                                            <option value="">Pick One</option>
-                                            <option value="30_days_before">Send reminder for this deadline 30 days
-                                                before</option>
-                                            <option value="60_days_before">Send reminder for this deadline 60 days
-                                                before</option>
-                                        </select>
-                                        @error('reminder')
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check" style="padding-left:0px !important;">
+                                        <input wire:model='check_reminder'
+                                            class="form-check-input @error('check_reminder') is-invalid @enderror"
+                                            type="checkbox" id="fcustomCheck1" checked="">
+                                        @error('check_reminder')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
+                                        <label class="custom-control-label" for="customCheck1">
+                                            Send Reminder
+                                        </label>
                                     </div>
                                 </div>
+                                <div class="col-md-12 text-center">
+                                    <span wire:loading wire:target='check_reminder'
+                                        class="spinner-border spinner-border-sm" role="status" aria-hidden="true">
+                                    </span>
+                                </div>
+                                @if ($check_reminder)
+                                    <div class="col-md-12">
+                                        <div class="input-group input-group-static my-3">
+                                            <select wire:model.defer='reminder'
+                                                class="form-control  @error('reminder') is-invalid @enderror">
+                                                <option value="">Pick One</option>
+                                                <option value="30_days_before">Send reminder for this deadline 30 days
+                                                    before</option>
+                                                <option value="60_days_before">Send reminder for this deadline 60 days
+                                                    before</option>
+                                            </select>
+                                            @error('reminder')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="col-md-12">
                                     <button type="button" class="btn btn-primary" wire:attr='disabled'
                                         wire:click='Update'>

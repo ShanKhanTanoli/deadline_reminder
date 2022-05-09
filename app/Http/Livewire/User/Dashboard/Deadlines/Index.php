@@ -15,7 +15,7 @@ class Index extends Component
 
     public function render()
     {
-        $deadlines = User::LatestDeadlinesPaginate(Auth::user()->id, 6);
+        $deadlines = User::LatestDeadlinesPaginate(Auth::user()->id, 10);
         return view('livewire.user.dashboard.deadlines.index')
             ->with(['deadlines' => $deadlines])
             ->extends('layouts.dashboard')

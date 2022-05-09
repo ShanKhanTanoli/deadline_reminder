@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class Index extends Component
 {
     public
+        $check_reminder,
         $customer_id,
         $name,
         $date,
@@ -28,6 +29,10 @@ class Index extends Component
 
     public function Add()
     {
+        $msg = [
+           'check_reminder.required' => 'Select Reminder', 
+           'check_reminder.in' => 'Select Reminder', 
+        ];
         $validated = $this->validate([
             'customer_id' => 'required|numeric',
             'name' => 'required|string',
@@ -36,8 +41,10 @@ class Index extends Component
             'renew_state' => 'required|string|in:to_renew,waiting_cash,renewed,deleted',
             'type_of_renew' => 'required|string|in:domain,hosting,hosting_email,wpml,privacy_cookie,other',
             'note' => 'required|string',
+            'check_reminder' => 'required|in:1',
             'reminder' => 'required|string|in:30_days_before,60_days_before',
-        ]);
+        ],$msg);
+
         try {
             $data = [
                 'user_id' => Auth::user()->id,

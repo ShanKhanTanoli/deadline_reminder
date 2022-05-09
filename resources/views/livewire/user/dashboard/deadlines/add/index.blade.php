@@ -117,8 +117,8 @@
                                 <div class="col-md-12">
                                     <div class="input-group input-group-static my-3">
                                         <label for="note">Note</label>
-                                        <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror" placeholder="Enter Note"
-                                            rows="5">{{ old('note') }}</textarea>
+                                        <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror"
+                                            placeholder="Enter Note">{{ old('note') }}</textarea>
                                         @error('note')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -126,9 +126,29 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-check" style="padding-left:0px !important;">
+                                        <input wire:model='check_reminder'
+                                            class="form-check-input @error('check_reminder') is-invalid @enderror"
+                                            type="checkbox" id="fcustomCheck1" checked="">
+                                            @error('check_reminder')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        <label class="custom-control-label" for="customCheck1">
+                                            Send Reminder
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                <span wire:loading wire:target='check_reminder' class="spinner-border spinner-border-sm" role="status"
+                                            aria-hidden="true">
+                                        </span>
+                                </div>
+                                @if($check_reminder)
                                 <div class="col-md-12">
                                     <div class="input-group input-group-static my-3">
-                                        <label for="reminder">Reminder</label>
                                         <select wire:model.defer='reminder'
                                             class="form-control  @error('reminder') is-invalid @enderror">
                                             <option value="">Pick One</option>
@@ -144,9 +164,10 @@
                                         @enderror
                                     </div>
                                 </div>
+                                @endif
                                 <div class="col-md-12">
                                     <button type="button" class="btn btn-primary" wire:attr='disabled' wire:click='Add'>
-                                        <span wire:loading class="spinner-border spinner-border-sm" role="status"
+                                        <span wire:loading wire:target='Add' class="spinner-border spinner-border-sm" role="status"
                                             aria-hidden="true">
                                         </span>
                                         Save Changes

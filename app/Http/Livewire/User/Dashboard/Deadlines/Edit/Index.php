@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
-    public $deadline,
+    public
+        $check_reminder,
+        $deadline,
         $customer_id,
         $name,
         $date,
@@ -33,6 +35,7 @@ class Index extends Component
             $this->type_of_renew = $deadline->type_of_renew;
             $this->note = $deadline->note;
             $this->reminder = $deadline->reminder;
+            $this->check_reminder = 1;
         } else {
             session()->flash('error', 'No such deadline found');
             return redirect(route('UserDeadlines'));
@@ -58,6 +61,7 @@ class Index extends Component
                 'renew_state' => 'required|string|in:to_renew,waiting_cash,renewed,deleted',
                 'type_of_renew' => 'required|string|in:domain,hosting,hosting_email,wpml,privacy_cookie,other',
                 'note' => 'required|string',
+                'check_reminder' => 'required|in:1',
                 'reminder' => 'required|string|in:30_days_before,60_days_before',
             ]);
 

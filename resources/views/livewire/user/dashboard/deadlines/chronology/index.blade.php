@@ -2,17 +2,17 @@
     @include('errors.alerts')
     <div class="row mb-4">
         <div class="col-xl-4 col-sm-4 mb-xl-0 mb-4">
-            <a href="{{ route('UserDeadlineChronology', $deadline->slug) }}">
+            <a href="{{ route('UserDeadlines') }}">
                 <div class="card">
                     <div class="card-header p-3 pt-2" style="border-radius: 0;">
                         <div
                             class="icon icon-lg icon-shape bg-gradient-primary shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                            <i class="fas fa-history opacity-10"></i>
+                            <i class="fas fa-arrow-left opacity-10"></i>
                         </div>
                         <div class="text-end pt-1">
-                            <p class="text-sm mb-0 text-capitalize">Chronologies</p>
+                            <p class="text-sm mb-0 text-capitalize">Go</p>
                             <h4 class="mb-0">
-                                {{ Deadline::CountChronologies($deadline->id) }}
+                                Back
                             </h4>
                         </div>
                     </div>
@@ -199,7 +199,7 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">
-                                                        {{ Str::substr($chronology->note,0, 12) }}...
+                                                        {{ Str::substr($chronology->note, 0, 12) }}...
                                                     </h6>
                                                 </div>
                                             </div>

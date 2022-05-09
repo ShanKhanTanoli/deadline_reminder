@@ -1,7 +1,25 @@
 <div class="container-fluid">
     @include('errors.alerts')
     <div class="row mb-4">
-        <div class="col-xl-4 col-sm-4 mb-xl-0 mb-4">
+        <div class="col-xl-3 col-sm-3 mb-xl-0 mb-4">
+            <a href="{{ route('UserCustomers') }}">
+                <div class="card">
+                    <div class="card-header p-3 pt-2" style="border-radius: 0;">
+                        <div
+                            class="icon icon-lg icon-shape bg-gradient-primary shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                            <i class="fas fa-arrow-left opacity-10"></i>
+                        </div>
+                        <div class="text-end pt-1">
+                            <p class="text-sm mb-0 text-capitalize">Go</p>
+                            <h4 class="mb-0">
+                                Back
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-xl-3 col-sm-3 mb-xl-0 mb-4">
             <a href="#">
                 <div class="card">
                     <div class="card-header p-3 pt-2" style="border-radius: 0;">
@@ -19,7 +37,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-xl-4 col-sm-4 mb-xl-0 mb-4">
+        <div class="col-xl-3 col-sm-3 mb-xl-0 mb-4">
             <a href="{{ route('UserEditCustomer', $customer->slug) }}">
                 <div class="card">
                     <div class="card-header p-3 pt-2" style="border-radius: 0;">
@@ -37,8 +55,8 @@
                 </div>
             </a>
         </div>
-        <div class="col-xl-4 col-sm-4 mb-xl-0 mb-4">
-            <a href="#">
+        <div class="col-xl-3 col-sm-3 mb-xl-0 mb-4">
+            <a href="{{ route('UserAddDeadline') }}">
                 <div class="card">
                     <div class="card-header p-3 pt-2" style="border-radius: 0;">
                         <div

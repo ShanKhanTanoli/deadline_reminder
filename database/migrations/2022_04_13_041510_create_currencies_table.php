@@ -25,13 +25,31 @@ return new class extends Migration
 
         Currency::create([
             'name' => 'usd',
-            'description' => 'usd',
+            'description' => 'United States',
             'slug' => Str::random(10),
         ]);
 
         Currency::create([
             'name' => 'euro',
-            'description' => 'euro',
+            'description' => 'Europe',
+            'slug' => Str::random(10),
+        ]);
+
+        Currency::create([
+            'name' => 'pkr',
+            'description' => 'Pakistan',
+            'slug' => Str::random(10),
+        ]);
+
+        Currency::create([
+            'name' => 'inr',
+            'description' => 'India',
+            'slug' => Str::random(10),
+        ]);
+
+        Currency::create([
+            'name' => 'gbp',
+            'description' => 'Great Britian',
             'slug' => Str::random(10),
         ]);
     }

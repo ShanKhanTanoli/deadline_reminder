@@ -32,19 +32,21 @@ class SignUp extends Component
     public function register()
     {
         $this->validate();
+
         $user = User::create([
             'name' => $this->name,
             'user_name' => Str::random(10),
             'email' => $this->email,
-            'role' => 'business',
+            'role' => 'user',
             'role_id' => 2,
             'password' => Hash::make($this->password),
             'slug' => Str::random(20),
         ]);
 
-        auth()->login($user);
-
-        return redirect(Redirect::ToDashboard());
+        //auth()->login($user);
+        session()->flash('success', 'You are successfully registered.');
+        return redirect(route('login'));
+        //return redirect(Redirect::ToDashboard());
     }
 
     public function render()

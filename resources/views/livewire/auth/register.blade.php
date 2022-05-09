@@ -11,10 +11,10 @@
                     <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto ">
                         <div class="card card-plain">
                             <div class="card-header text-center">
-                                <h4 class="font-weight-bolder">Register</h4>
+                                <h4 class="font-weight-bolder text-primary">Register</h4>
                             </div>
                             <div class="card-body">
-                                <form role="form">
+                                <form role="form" wire:submit.prevent='register()'>
                                     <div class="input-group input-group-outline mb-3">
                                         <input id="name" type="name" wire:model.defer="name"
                                             class="form-control @error('name') is-invalid @enderror" name="name"
@@ -46,9 +46,11 @@
                                         @enderror
                                     </div>
                                     <div class="input-group input-group-outline mb-3">
-                                        <input id="password_confirmation" type="password" wire:model.defer="password_confirmation"
-                                            class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation"
-                                            autocomplete="password_confirmation" placeholder="Confirm Password">
+                                        <input id="password_confirmation" type="password"
+                                            wire:model.defer="password_confirmation"
+                                            class="form-control @error('password_confirmation') is-invalid @enderror"
+                                            name="password_confirmation" autocomplete="password_confirmation"
+                                            placeholder="Confirm Password">
                                         @error('password_confirmation')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -56,8 +58,8 @@
                                         @enderror
                                     </div>
                                     <div class="text-center">
-                                        <button wire:click='register()' type="button"
-                                            class="btn btn-lg bg-gradient-dark btn-lg w-100 mt-4 mb-0">
+                                        <button type="submit"
+                                            class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">
                                             <span wire:loading class="spinner-border spinner-border-sm" role="status"
                                                 aria-hidden="true"></span>
                                             Register
@@ -68,7 +70,7 @@
                             <div class="card-footer text-center pt-0 px-lg-2 px-1">
                                 <p class="mb-2 text-sm mx-auto">
                                     <a href="{{ route('login') }}"
-                                        class="text-dark text-gradient font-weight-bold">
+                                        class="text-primary text-gradient font-weight-bold">
                                         Already have an Account ? Login here
                                     </a>
                                 </p>

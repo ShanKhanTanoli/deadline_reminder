@@ -74,6 +74,8 @@
                                                     @forelse (Currency::all() as $currency)
                                                         <option value="{{ $currency->id }}">
                                                             {{ strtoupper($currency->name) }}
+                                                            -
+                                                            {{ $currency->description }}
                                                         </option>
                                                     @empty
                                                         <option value="">No currency found</option>

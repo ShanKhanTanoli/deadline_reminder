@@ -11,10 +11,10 @@
                     <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto ">
                         <div class="card card-plain">
                             <div class="card-header text-center">
-                                <h4 class="font-weight-bolder">Reset Password</h4>
+                                <h4 class="font-weight-bolder text-primary">Reset Password</h4>
                             </div>
                             <div class="card-body">
-                                <form role="form">
+                                <form role="form" wire:submit.prevent='recoverPassword()'>
                                     <div class="input-group input-group-outline mb-3">
                                         <input id="email" type="email" wire:model.defer="email"
                                             class="form-control @error('email') is-invalid @enderror" name="email"
@@ -27,8 +27,8 @@
                                         @enderror
                                     </div>
                                     <div class="text-center">
-                                        <button wire:click='recoverPassword()' type="button"
-                                            class="btn btn-lg bg-gradient-dark btn-lg w-100 mt-4 mb-0">
+                                        <button type="submit"
+                                            class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">
                                             <span wire:loading class="spinner-border spinner-border-sm" role="status"
                                                 aria-hidden="true"></span>
                                             {{ __('Send Password Reset Link') }}
@@ -38,7 +38,7 @@
                             </div>
                             <div class="card-footer text-center pt-0 px-lg-2 px-1">
                                 <p class="mb-2 text-sm mx-auto">
-                                    <a href="{{ route('login') }}" class="text-dark text-gradient font-weight-bold">
+                                    <a href="{{ route('login') }}" class="text-primary text-gradient font-weight-bold">
                                         Already have an Account ? Login here
                                     </a>
                                 </p>

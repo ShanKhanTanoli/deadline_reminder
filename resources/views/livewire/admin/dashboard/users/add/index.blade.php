@@ -12,10 +12,11 @@
                 </div>
                 <div class="card-body px-0 pb-2">
                     <div class="container">
-                        <form>
+                        <form wire:submit.prevent='Add'>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="input-group input-group-outline my-3">
+                                    <label for="name">Name</label>
+                                    <div class="input-group input-group-static my-3">
                                         <input type="text" wire:model.defer='name' value="{{ old('name') }}"
                                             class="form-control  @error('name') is-invalid @enderror"
                                             placeholder="Enter Name">
@@ -27,7 +28,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="input-group input-group-outline my-3">
+                                    <label for="user_name">User Name</label>
+                                    <div class="input-group input-group-static my-3">
                                         <input type="text" wire:model.defer='user_name' value="{{ old('user_name') }}"
                                             class="form-control  @error('user_name') is-invalid @enderror"
                                             placeholder="Enter User Name">
@@ -38,10 +40,9 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
-                                    <div class="input-group input-group-outline my-3">
+                                    <label for="number">Number</label>
+                                    <div class="input-group input-group-static my-3">
                                         <input type="text" wire:model.defer='number' value="{{ old('number') }}"
                                             class="form-control  @error('number') is-invalid @enderror"
                                             placeholder="Enter Number">
@@ -53,7 +54,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="input-group input-group-outline my-3">
+                                    <label for="email">Email</label>
+                                    <div class="input-group input-group-static my-3">
                                         <input type="text" wire:model.defer='email' value="{{ old('email') }}"
                                             class="form-control  @error('email') is-invalid @enderror"
                                             placeholder="Enter Email">
@@ -64,10 +66,9 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
-                                    <div class="input-group input-group-outline my-3">
+                                    <label for="password">Password</label>
+                                    <div class="input-group input-group-static my-3">
                                         <input type="password" wire:model.defer='password'
                                             value="{{ old('password') }}"
                                             class="form-control  @error('password') is-invalid @enderror"
@@ -80,7 +81,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="input-group input-group-outline my-3">
+                                    <label for="password_confirmation">Confirm Password</label>
+                                    <div class="input-group input-group-static my-3">
                                         <input type="password" wire:model.defer='password_confirmation'
                                             value="{{ old('password_confirmation') }}"
                                             class="form-control  @error('password_confirmation') is-invalid @enderror"
@@ -92,10 +94,8 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-md-6">
-                                    <button type="button" class="btn btn-primary" wire:attr='disabled' wire:click='Add'>
+                                    <button type="submit" class="btn btn-primary" wire:attr='disabled'>
                                         <span wire:loading class="spinner-border spinner-border-sm" role="status"
                                             aria-hidden="true">
                                         </span>

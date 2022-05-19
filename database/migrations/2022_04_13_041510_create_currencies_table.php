@@ -30,7 +30,7 @@ return new class extends Migration
         ]);
 
         Currency::create([
-            'name' => 'euro',
+            'name' => 'eur',
             'description' => 'Europe',
             'slug' => Str::random(10),
         ]);

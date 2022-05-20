@@ -18,7 +18,24 @@ trait AdminStripeProducts
             );
             return $stripe->products->all(['limit' => $load]);
         } catch (Exception $e) {
-            return session()->flash('error', trans('alerts.plans-not-found'));
+            return session()->flash('error', 'Something went wrong');
+        }
+    }
+
+    public static function ActiveProducts($load)
+    {
+        try {
+            $skey = StripeConfiguration::first()->secret_key;
+            $stripe = new \Stripe\StripeClient(
+                $skey
+            );
+            return $stripe->products
+                ->all([
+                    'limit' => $load,
+                    'active' => true,
+                ]);
+        } catch (Exception $e) {
+            return session()->flash('error', 'Something went wrong');
         }
     }
 
@@ -32,7 +49,22 @@ trait AdminStripeProducts
             return $stripe->products
                 ->all()->count();
         } catch (Exception $e) {
-            return session()->flash('error', trans('alerts.error'));
+            return session()->flash('error', 'Something went wrong');
+        }
+    }
+
+    public static function CountActiveProducts()
+    {
+        try {
+            $skey = StripeConfiguration::first()->secret_key;
+            $stripe = new \Stripe\StripeClient(
+                $skey
+            );
+            return $stripe->products
+                ->all(['active' => true])
+                ->count();
+        } catch (Exception $e) {
+            return session()->flash('error', 'Something went wrong');
         }
     }
 
@@ -48,7 +80,7 @@ trait AdminStripeProducts
                 []
             );
         } catch (Exception $e) {
-            return session()->flash('error', trans('alerts.error'));
+            return session()->flash('error', 'Something went wrong');
         }
     }
 
@@ -64,7 +96,7 @@ trait AdminStripeProducts
                 ['active' => false]
             );
         } catch (Exception $e) {
-            return session()->flash('error', trans('alerts.error'));
+            return session()->flash('error', 'Something went wrong');
         }
     }
 
@@ -80,7 +112,7 @@ trait AdminStripeProducts
                 ['active' => true]
             );
         } catch (Exception $e) {
-            return session()->flash('error', trans('alerts.error'));
+            return session()->flash('error', 'Something went wrong');
         }
     }
 
@@ -99,7 +131,7 @@ trait AdminStripeProducts
                 ]
             );
         } catch (Exception $e) {
-            return session()->flash('error', trans('alerts.error'));
+            return session()->flash('error', 'Something went wrong');
         }
     }
     /*End::Products*/
@@ -122,7 +154,7 @@ trait AdminStripeProducts
                 'product' => $product->id,
             ]);
         } catch (Exception $e) {
-            return session()->flash('error', trans('alerts.error'));
+            return session()->flash('error', 'Something went wrong');
         }
     }
     public static function AddRecurringProductWithPrice($name, $description = null, $amount, $interval_count, $interval)
@@ -146,7 +178,7 @@ trait AdminStripeProducts
                 'product' => $product->id,
             ]);
         } catch (Exception $e) {
-            return session()->flash('error', trans('alerts.error'));
+            return session()->flash('error', 'Something went wrong');
         }
     }
     /*End::Products with prices*/

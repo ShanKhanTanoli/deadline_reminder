@@ -24,6 +24,22 @@
             </li>
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">
+                    Platform Plans
+                </h6>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white @if (Request::path() == 'User/PlatformPlans') active bg-gradient-primary @else '' @endif"
+                    href="{{ route('UserPlatformPlans') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">
+                        Platform Plans
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">
                     Customers
                 </h6>
             </li>
@@ -51,6 +67,22 @@
                     </div>
                     <span class="nav-link-text ms-1">
                         Deadlines
+                    </span>
+                </a>
+            </li>
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">
+                    Subscriptions
+                </h6>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white @if (Request::path() == 'User/Subscriptions') active bg-gradient-primary @else '' @endif"
+                    href="{{ route('UserSubscriptions') }}">
+                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">
+                        Subscriptions
                     </span>
                 </a>
             </li>

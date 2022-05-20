@@ -2,6 +2,7 @@
 
 namespace App\Helpers\User;
 
+use App\Helpers\User\Traits\UserSubscriptions;
 use App\Helpers\User\Traits\UserCustomers;
 use App\Helpers\User\Traits\UserDeadlines;
 use App\Helpers\User\Traits\UserSettings;
@@ -10,7 +11,7 @@ use App\Models\User as UserModel;
 
 class User
 {
-    use UserCustomers,UserSettings,UserDeadlines;
+    use UserCustomers,UserSettings,UserDeadlines,UserSubscriptions;
 
     /*Begin::User*/
     public static function Is()

@@ -50,7 +50,7 @@
                 </div>
                 <div class="card-body px-0 pb-2">
                     <div class="container">
-                        <form>
+                        <form wire:submit.prevent='Update'>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-group input-group-static my-3">
@@ -82,7 +82,7 @@
                                     <div class="input-group input-group-static my-3">
                                         <label for="address">Address</label>
                                         <textarea wire:model.defer='address' class="form-control  @error('address') is-invalid @enderror"
-                                            placeholder="Enter Address" rows="5">{{ old('address') }}</textarea>
+                                            placeholder="Enter Address">{{ old('address') }}</textarea>
                                         @error('address')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -93,8 +93,8 @@
                                 <div class="col-md-12">
                                     <div class="input-group input-group-static my-3">
                                         <label for="note">Note</label>
-                                        <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror" placeholder="Enter Note"
-                                            rows="5">{{ old('note') }}</textarea>
+                                        <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror"
+                                            placeholder="Enter Note">{{ old('note') }}</textarea>
                                         @error('note')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -103,8 +103,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <button type="button" class="btn btn-primary" wire:attr='disabled'
-                                        wire:click='Update'>
+                                    <button type="submit" class="btn btn-primary" wire:attr='disabled'>
                                         <span wire:loading class="spinner-border spinner-border-sm" role="status"
                                             aria-hidden="true">
                                         </span>

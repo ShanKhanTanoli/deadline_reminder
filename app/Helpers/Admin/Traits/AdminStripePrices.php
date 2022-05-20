@@ -17,7 +17,7 @@ trait AdminStripePrices
             );
             return $stripe->prices->all(['limit' => $load]);
         } catch (Exception $e) {
-            return session()->flash('error', trans('alerts.plans-not-found'));
+            return session()->flash('error', 'Something went wrong');
         }
     }
 
@@ -31,7 +31,7 @@ trait AdminStripePrices
             return $stripe->prices
                 ->all()->count();
         } catch (Exception $e) {
-            return session()->flash('error', trans('alerts.error'));
+            return session()->flash('error', 'Something went wrong');
         }
     }
 
@@ -47,7 +47,7 @@ trait AdminStripePrices
                 []
             );
         } catch (Exception $e) {
-            return session()->flash('error', trans('alerts.error'));
+            return session()->flash('error', 'Something went wrong');
         }
     }
     /*End::Stripe Prices*/

@@ -54,6 +54,9 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        #
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Name
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -86,6 +89,15 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">
+                                                        {{ $loop->iteration }}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">
                                                         {{ $customer->name }}
                                                     </h6>
                                                 </div>
@@ -104,11 +116,7 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">
-                                                        @if (strlen($customer->address) > 10)
-                                                            {{ $customer->address }}...
-                                                        @else
-                                                            {{ $customer->address }}
-                                                        @endif
+                                                        {{ Str::substr($customer->address, 0, 15) }}...
                                                     </h6>
                                                 </div>
                                             </div>
@@ -117,11 +125,7 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">
-                                                        @if (strlen($customer->note) > 10)
-                                                            {{ $customer->note }}...
-                                                        @else
-                                                            {{ $customer->note }}
-                                                        @endif
+                                                        {{ Str::substr($customer->note, 0, 15) }}...
                                                     </h6>
                                                 </div>
                                             </div>

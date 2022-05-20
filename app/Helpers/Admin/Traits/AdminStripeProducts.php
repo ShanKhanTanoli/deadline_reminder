@@ -84,6 +84,38 @@ trait AdminStripeProducts
         }
     }
 
+    public static function ProductAllowedCustomers($product)
+    {
+        try {
+            $skey = StripeConfiguration::first()->secret_key;
+            $stripe = new \Stripe\StripeClient(
+                $skey
+            );
+            return $stripe->products->retrieve(
+                $product,
+                []
+            )->metadata->customers;
+        } catch (Exception $e) {
+            return session()->flash('error', 'Something went wrong');
+        }
+    }
+
+    public static function ProductAllowedDeadlines($product)
+    {
+        try {
+            $skey = StripeConfiguration::first()->secret_key;
+            $stripe = new \Stripe\StripeClient(
+                $skey
+            );
+            return $stripe->products->retrieve(
+                $product,
+                []
+            )->metadata->deadlines;
+        } catch (Exception $e) {
+            return session()->flash('error', 'Something went wrong');
+        }
+    }
+
     public static function ArchiveProduct($product)
     {
         try {

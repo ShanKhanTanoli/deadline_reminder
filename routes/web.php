@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Admin\Admin;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Logout;
 use App\Http\Livewire\Auth\SignUp;
@@ -12,6 +13,7 @@ use App\Http\Livewire\Auth\ForgotPassword;
 //Auth::routes();
 
 Route::get('debug', function () {
+    dd(Admin::ProductAllowedCustomers('prod_LibjVn1h4Su22y'));
     return "done";
 });
 

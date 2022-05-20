@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Customer;
 use App\Helpers\User\User;
 use Illuminate\Support\Str;
+use App\Helpers\Admin\Admin;
 use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
@@ -29,6 +30,13 @@ class Index extends Component
             $this->created_customers = User::CountCustomersWithSubscription($this->user->id, $this->active_subscription->id);
             //Deadlines created with this subscription
             $this->created_deadlines = User::CountDeadlinesWithSubscription($this->user->id, $this->active_subscription->id);
+
+            //Allowed Customers
+            $allowed_customers = Admin::ProductAllowedCustomers($this->active_subscription->name);
+            if ($this->created_customers >= $allowed_customers) {
+                session()->flash('error', 'Your subscription allows you to create only ' . $allowed_customers . ' Customers.Please check your Subscription');
+                return redirect(route('UserCustomers'));
+            }
         } else {
             session()->flash('error', "You don't have an active subscription.");
             return redirect(route('UserCustomers'));
@@ -51,6 +59,7 @@ class Index extends Component
         ]);
         try {
             $data = [
+                'subscription_id' => $this->active_subscription->id,
                 'user_id' => Auth::user()->id,
                 'name' => $validated['name'],
                 'email' => $validated['email'],
@@ -61,10 +70,19 @@ class Index extends Component
                 'slug' => strtoupper(Str::random(20)),
             ];
 
-            Customer::create($data);
+            //Allowed Customers
+            $allowed_customers = Admin::ProductAllowedCustomers($this->active_subscription->name);
 
-            session()->flash('success', 'Added Successfully');
-            return redirect(route('UserCustomers'));
+            if ($this->created_customers < $allowed_customers) {
+                $merged = array_merge($data);
+                Customer::create($merged);
+                session()->flash('success', 'Added Successfully');
+                return redirect(route('UserCustomers'));
+            } else {
+                session()->flash('error', 'Your subscription allows you to create only ' . $allowed_customers . ' Customers.Please check your Subscription');
+                return redirect(route('UserCustomers'));
+            }
+            
         } catch (Exception $e) {
             return session()->flash('error', $e->getMessage());
         }

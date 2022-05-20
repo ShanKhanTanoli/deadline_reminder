@@ -5,7 +5,9 @@ namespace App\Http\Livewire\User\Dashboard\Deadlines\Add;
 use Exception;
 use Livewire\Component;
 use App\Models\Deadline;
+use App\Helpers\User\User;
 use Illuminate\Support\Str;
+use App\Helpers\Admin\Admin;
 use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
@@ -21,6 +23,36 @@ class Index extends Component
         $note,
         $reminder;
 
+
+    public $active_subscription, $user, $created_deadlines;
+
+    public function mount()
+    {
+        //If have an active subscription
+        if (Auth::user()->subscriptions()->active()->count() > 0) {
+            //Assign User
+            $this->user = Auth::user();
+            //Active subscription
+            $this->active_subscription = Auth::user()
+                ->subscriptions()
+                ->active()
+                ->first();
+
+            //Deadlines created with this subscription
+            $this->created_deadlines = User::CountDeadlinesWithSubscription($this->user->id, $this->active_subscription->id);
+
+            //Allowed Deadlines
+            $allowed_deadlines = Admin::ProductAllowedDeadlines($this->active_subscription->name);
+            if ($this->created_deadlines >= $allowed_deadlines) {
+                session()->flash('error', 'Your subscription allows you to create only ' . $allowed_deadlines . ' Deadlines for each Customer.Please check your Subscription');
+                return redirect(route('UserDeadlines'));
+            }
+        } else {
+            session()->flash('error', "You don't have an active subscription.");
+            return redirect(route('UserDeadlines'));
+        }
+    }
+
     public function render()
     {
         return view('livewire.user.dashboard.deadlines.add.index')
@@ -30,8 +62,8 @@ class Index extends Component
     public function Add()
     {
         $msg = [
-           'check_reminder.required' => 'Select Reminder', 
-           'check_reminder.in' => 'Select Reminder', 
+            'check_reminder.required' => 'Select Reminder',
+            'check_reminder.in' => 'Select Reminder',
         ];
         $validated = $this->validate([
             'customer_id' => 'required|numeric',
@@ -43,15 +75,23 @@ class Index extends Component
             'note' => 'required|string',
             'check_reminder' => 'required|in:1',
             'reminder' => 'required|string|in:30_days_before,60_days_before',
-        ],$msg);
+        ], $msg);
 
         try {
-            $data = [
-                'user_id' => Auth::user()->id,
-                'slug' => strtoupper(Str::random(20)),
-            ];
-            Deadline::create(array_merge($data,$validated));
-            session()->flash('success', 'Added Successfully');
+            //Allowed Deadlines
+            $allowed_deadlines = Admin::ProductAllowedDeadlines($this->active_subscription->name);
+            if ($this->created_deadlines < $allowed_deadlines) {
+                $data = [
+                    'subscription_id' => $this->active_subscription->id,
+                    'user_id' => Auth::user()->id,
+                    'slug' => strtoupper(Str::random(20)),
+                ];
+                Deadline::create(array_merge($data, $validated));
+                session()->flash('success', 'Added Successfully');
+            } else {
+                session()->flash('error', 'Your subscription allows you to create only ' . $allowed_deadlines . ' Deadlines for each Customer.Please check your Subscription');
+                return redirect(route('UserDeadlines'));
+            }
             return redirect(route('UserDeadlines'));
         } catch (Exception $e) {
             return session()->flash('error', $e->getMessage());

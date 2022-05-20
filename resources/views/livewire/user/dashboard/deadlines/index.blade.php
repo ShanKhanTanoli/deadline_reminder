@@ -54,6 +54,9 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        #
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Name
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -92,6 +95,15 @@
                             <tbody>
                                 @foreach ($deadlines as $deadline)
                                     <tr>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">
+                                                        {{ $loop->iteration }}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
@@ -192,19 +204,19 @@
                                             </div>
                                         </td>
                                         <td class="text-center">
-                                            @if($customer = Customer::Find($deadline->customer_id))
-                                            <button class="btn btn-link mt-3"
-                                                wire:click='ViewCustomer("{{ $deadline->customer_id }}")'>
-                                                <span wire:loading
-                                                    wire:target='ViewCustomer("{{ $deadline->customer_id }}")'
-                                                    class="spinner-border spinner-border-sm" role="status"
-                                                    aria-hidden="true"></span>
-                                                {{ $customer->name }}
-                                            </button>
+                                            @if ($customer = Customer::Find($deadline->customer_id))
+                                                <button class="btn btn-link mt-3"
+                                                    wire:click='ViewCustomer("{{ $deadline->customer_id }}")'>
+                                                    <span wire:loading
+                                                        wire:target='ViewCustomer("{{ $deadline->customer_id }}")'
+                                                        class="spinner-border spinner-border-sm" role="status"
+                                                        aria-hidden="true"></span>
+                                                    {{ Str::substr($customer->name, 0, 12) }}...
+                                                </button>
                                             @else
-                                            <span class="badge bg-gradient-danger">
-                                                Not Found
-                                            </span>
+                                                <span class="badge bg-gradient-danger">
+                                                    Not Found
+                                                </span>
                                             @endif
                                         </td>
                                         <td class="text-center">

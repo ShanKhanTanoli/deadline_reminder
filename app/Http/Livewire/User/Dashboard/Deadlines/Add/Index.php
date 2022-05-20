@@ -24,7 +24,10 @@ class Index extends Component
         $reminder;
 
 
-    public $active_subscription, $user, $created_deadlines;
+    public $active_subscription,
+        $user,
+        $created_deadlines,
+        $allowed_deadlines;
 
     public function mount()
     {
@@ -38,13 +41,25 @@ class Index extends Component
                 ->active()
                 ->first();
 
-            //Deadlines created with this subscription
-            $this->created_deadlines = User::CountDeadlinesWithSubscription($this->user->id, $this->active_subscription->id);
-
-            //Allowed Deadlines
+            //Allowed Customers
             $allowed_deadlines = Admin::ProductAllowedDeadlines($this->active_subscription->name);
-            if ($this->created_deadlines >= $allowed_deadlines) {
-                session()->flash('error', 'Your subscription allows you to create only ' . $allowed_deadlines . ' Deadlines for each Customer.Please check your Subscription');
+
+            //If null then set as unlimited
+            if ($allowed_deadlines == null) {
+                $this->allowed_deadlines = "unlimited";
+            } else {
+                $this->allowed_deadlines = $allowed_deadlines;
+            }
+
+            //If allowed deadlines are unlimited
+            if ($this->allowed_deadlines == "unlimited") {
+                return true;
+                //If allowed deadlines are available
+            } elseif ($this->created_deadlines <= $this->allowed_deadlines) {
+                return true;
+                //If nothing available
+            } else {
+                session()->flash('error', 'Your subscription allows you to create only ' . $allowed_deadlines . ' for each Customer.Please check your Subscription');
                 return redirect(route('UserDeadlines'));
             }
         } else {
@@ -76,11 +91,9 @@ class Index extends Component
             'check_reminder' => 'required|in:1',
             'reminder' => 'required|string|in:30_days_before,60_days_before',
         ], $msg);
-
         try {
-            //Allowed Deadlines
-            $allowed_deadlines = Admin::ProductAllowedDeadlines($this->active_subscription->name);
-            if ($this->created_deadlines < $allowed_deadlines) {
+            //If allowed customers are unlimited
+            if ($this->allowed_deadlines == "unlimited") {
                 $data = [
                     'subscription_id' => $this->active_subscription->id,
                     'user_id' => Auth::user()->id,
@@ -88,11 +101,20 @@ class Index extends Component
                 ];
                 Deadline::create(array_merge($data, $validated));
                 session()->flash('success', 'Added Successfully');
+                return redirect(route('UserDeadlines'));
+            } elseif ($this->created_deadlines < $this->allowed_deadlines) {
+                $data = [
+                    'subscription_id' => $this->active_subscription->id,
+                    'user_id' => Auth::user()->id,
+                    'slug' => strtoupper(Str::random(20)),
+                ];
+                Deadline::create(array_merge($data, $validated));
+                session()->flash('success', 'Added Successfully');
+                return redirect(route('UserDeadlines'));
             } else {
-                session()->flash('error', 'Your subscription allows you to create only ' . $allowed_deadlines . ' Deadlines for each Customer.Please check your Subscription');
+                session()->flash('error', 'Your subscription allows you to create only ' . $this->allowed_deadlines . ' Deadlines for each Customer.Please check your Subscription');
                 return redirect(route('UserDeadlines'));
             }
-            return redirect(route('UserDeadlines'));
         } catch (Exception $e) {
             return session()->flash('error', $e->getMessage());
         }

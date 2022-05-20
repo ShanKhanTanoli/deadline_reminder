@@ -13,7 +13,7 @@
             </div>
             <div class="text-success text-center">
                 <strong>
-                    You have already an Active Subscription
+                    You are Subscribed.
                 </strong>
             </div>
         </div>

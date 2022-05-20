@@ -78,16 +78,30 @@
                                                 Subscribe
                                             </button>
                                         @else
-                                            <form wire:submit.prevent="Subscribe('{{ $price->id }}')">
-                                                <button type="submit" style="width: 100%;" wire:attrib='disabled'
-                                                    class="btn btn-lg bg-gradient-primary btn-block mt-3 mb-0">
-                                                    Subscribe
-                                                    <span wire:loading wire:target="Subscribe('{{ $price->id }}')"
-                                                        class="spinner-border spinner-border-sm" role="status"
-                                                        aria-hidden="true">
-                                                    </span>
-                                                </button>
-                                            </form>
+                                            @if ($price->unit_amount > 0)
+                                                <form wire:submit.prevent="Subscribe('{{ $price->id }}')">
+                                                    <button type="submit" style="width: 100%;" wire:attrib='disabled'
+                                                        class="btn btn-lg bg-gradient-primary btn-block mt-3 mb-0">
+                                                        Subscribe
+                                                        <span wire:loading
+                                                            wire:target="Subscribe('{{ $price->id }}')"
+                                                            class="spinner-border spinner-border-sm" role="status"
+                                                            aria-hidden="true">
+                                                        </span>
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <form wire:submit.prevent="Free('{{ $price->id }}')">
+                                                    <button type="submit" style="width: 100%;" wire:attrib='disabled'
+                                                        class="btn btn-lg bg-gradient-primary btn-block mt-3 mb-0">
+                                                        Free
+                                                        <span wire:loading wire:target="Free('{{ $price->id }}')"
+                                                            class="spinner-border spinner-border-sm" role="status"
+                                                            aria-hidden="true">
+                                                        </span>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         @endif
                                     @endif
                                 </div>

@@ -76,6 +76,12 @@
                                         Status
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Customers
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Deadlines
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Actions
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -148,7 +154,32 @@
                                                 </div>
                                             </div>
                                         </td>
-
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">
+                                                        @if ($customers = Admin::FindProduct($subscription->name)->metadata->customers)
+                                                            {{ $customers }}
+                                                        @else
+                                                            Unlimited
+                                                        @endif
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">
+                                                        @if ($deadlines = Admin::FindProduct($subscription->name)->metadata->deadlines)
+                                                            {{ $deadlines }}
+                                                        @else
+                                                            Unlimited
+                                                        @endif
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <!--Begin::If not ended-->
                                         @if (!Auth::user()->subscription($subscription->name)->ended())
                                             <!--Begin::If canceled-->
@@ -183,9 +214,7 @@
                                         @else
                                             <td class="align-middle">
                                                 <button class="btn btn-sm btn-danger disabled">
-                                                    Cancel
-                                                    /
-                                                    Resume
+                                                    Actions
                                                 </button>
                                             </td>
                                         @endif

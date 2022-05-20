@@ -10,6 +10,7 @@ class Deadline extends Model
     use HasFactory;
 
     protected $fillable = [
+        'subscription_id',
         'customer_id',
         'user_id',
         'name',

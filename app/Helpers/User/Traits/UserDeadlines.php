@@ -25,6 +25,13 @@ trait UserDeadlines
         return self::Deadlines($user)->count();
     }
 
+    public static function CountDeadlinesWithSubscription($user,$subscription)
+    {
+        return self::Deadlines($user)
+            ->where('subscription_id', $subscription)
+            ->count();
+    }
+
     public static function FindDeadline($user, $id)
     {
         if ($find = self::Find($user)) {

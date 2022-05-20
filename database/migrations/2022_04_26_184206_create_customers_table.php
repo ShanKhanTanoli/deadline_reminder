@@ -18,7 +18,16 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
 
-            //Foreign Key
+            //Subscription Foreign Key
+            $table->unsignedBigInteger('subscription_id')
+                ->nullable();
+            $table->foreign('subscription_id')
+                ->references('id')
+                ->on('subscriptions')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            //User Foreign Key
             $table->unsignedBigInteger('user_id')
                 ->nullable();
             $table->foreign('user_id')
@@ -37,18 +46,18 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        for ($user = 2; $user < 3; $user++) {
-            for ($customer = 1; $customer < 10; $customer++) {
-                Customer::create([
-                    'user_id' => $user,
-                    'name' => 'customer' . $customer,
-                    'email' => 'customer' . $customer . '@customer.com',
-                    'address' => 'This is Address',
-                    'note' => 'This is Note',
-                    'slug' => strtoupper(Str::random(20)),
-                ]);
-            }
-        }
+        // for ($user = 2; $user < 3; $user++) {
+        //     for ($customer = 1; $customer < 10; $customer++) {
+        //         Customer::create([
+        //             'user_id' => $user,
+        //             'name' => 'customer' . $customer,
+        //             'email' => 'customer' . $customer . '@customer.com',
+        //             'address' => 'This is Address',
+        //             'note' => 'This is Note',
+        //             'slug' => strtoupper(Str::random(20)),
+        //         ]);
+        //     }
+        // }
     }
 
     /**

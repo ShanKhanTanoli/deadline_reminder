@@ -18,7 +18,16 @@ return new class extends Migration
         Schema::create('deadlines', function (Blueprint $table) {
             $table->id();
 
-            //User ID Foreign Key
+            //Subscription Foreign Key
+            $table->unsignedBigInteger('subscription_id')
+                ->nullable();
+            $table->foreign('subscription_id')
+                ->references('id')
+                ->on('subscriptions')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            //User Foreign Key
             $table->unsignedBigInteger('user_id')
                 ->nullable();
             $table->foreign('user_id')
@@ -27,7 +36,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            //Customer ID Foreign Key
+            //Customer Foreign Key
             $table->unsignedBigInteger('customer_id')
                 ->nullable();
             $table->foreign('customer_id')
@@ -56,22 +65,22 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        for ($customer = 1; $customer < 10; $customer++) {
-            for ($deadline = 1; $deadline < mt_rand(5, 10); $deadline++) {
-                Deadline::create([
-                    'customer_id' => $customer,
-                    'user_id' => 2,
-                    'name' => 'Deadline' . $deadline,
-                    'date' => date('Y-' . mt_rand(2, 3) . '-' . mt_rand(1, 28)),
-                    'amount' => mt_rand(10, 100),
-                    'renew_state' => 'to_renew',
-                    'type_of_renew' => 'domain',
-                    'note' => 'This is Note',
-                    'reminder' => '30_days_before',
-                    'slug' => strtoupper(Str::random(20)),
-                ]);
-            }
-        }
+        // for ($customer = 1; $customer < 10; $customer++) {
+        //     for ($deadline = 1; $deadline < mt_rand(5, 10); $deadline++) {
+        //         Deadline::create([
+        //             'customer_id' => $customer,
+        //             'user_id' => 2,
+        //             'name' => 'Deadline' . $deadline,
+        //             'date' => date('Y-' . mt_rand(2, 3) . '-' . mt_rand(1, 28)),
+        //             'amount' => mt_rand(10, 100),
+        //             'renew_state' => 'to_renew',
+        //             'type_of_renew' => 'domain',
+        //             'note' => 'This is Note',
+        //             'reminder' => '30_days_before',
+        //             'slug' => strtoupper(Str::random(20)),
+        //         ]);
+        //     }
+        // }
     }
 
     /**

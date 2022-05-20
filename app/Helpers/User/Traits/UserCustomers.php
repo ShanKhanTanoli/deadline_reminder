@@ -25,6 +25,13 @@ trait UserCustomers
         return self::Customers($user)->count();
     }
 
+    public static function CountCustomersWithSubscription($user,$subscription)
+    {
+        return self::Customers($user)
+            ->where('subscription_id', $subscription)
+            ->count();
+    }
+
     public static function FindCustomer($user, $id)
     {
         if ($find = self::Find($user)) {

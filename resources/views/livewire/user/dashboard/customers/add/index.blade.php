@@ -12,68 +12,78 @@
                 </div>
                 <div class="card-body px-0 pb-2">
                     <div class="container">
-                        <form wire:submit.prevent='Add'>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="input-group input-group-static my-3">
-                                        <label for="name">Name</label>
-                                        <input type="text" wire:model.defer='name' value="{{ old('name') }}"
-                                            class="form-control  @error('name') is-invalid @enderror"
-                                            placeholder="Enter Name">
-                                        @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
+                        @if (Auth::user()->subscriptions()->active()->count() > 0)
+                            <form wire:submit.prevent='Add'>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group input-group-static my-3">
+                                            <label for="name">Name</label>
+                                            <input type="text" wire:model.defer='name' value="{{ old('name') }}"
+                                                class="form-control  @error('name') is-invalid @enderror"
+                                                placeholder="Enter Name">
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group input-group-static my-3">
+                                            <label for="email">Email</label>
+                                            <input type="text" wire:model.defer='email' value="{{ old('email') }}"
+                                                class="form-control  @error('email') is-invalid @enderror"
+                                                placeholder="Enter Email">
+                                            @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="input-group input-group-static my-3">
+                                            <label for="address">Address</label>
+                                            <textarea wire:model.defer='address' class="form-control  @error('address') is-invalid @enderror"
+                                                placeholder="Enter Address">{{ old('address') }}</textarea>
+                                            @error('address')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="input-group input-group-static my-3">
+                                            <label for="note">Note</label>
+                                            <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror"
+                                                placeholder="Enter Note">{{ old('note') }}</textarea>
+                                            @error('note')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary" wire:attr='disabled'>
+                                            <span wire:loading class="spinner-border spinner-border-sm" role="status"
+                                                aria-hidden="true">
                                             </span>
-                                        @enderror
+                                            Save Changes
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="input-group input-group-static my-3">
-                                        <label for="email">Email</label>
-                                        <input type="text" wire:model.defer='email' value="{{ old('email') }}"
-                                            class="form-control  @error('email') is-invalid @enderror"
-                                            placeholder="Enter Email">
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="input-group input-group-static my-3">
-                                        <label for="address">Address</label>
-                                        <textarea wire:model.defer='address' class="form-control  @error('address') is-invalid @enderror"
-                                            placeholder="Enter Address">{{ old('address') }}</textarea>
-                                        @error('address')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="input-group input-group-static my-3">
-                                        <label for="note">Note</label>
-                                        <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror"
-                                            placeholder="Enter Note">{{ old('note') }}</textarea>
-                                        @error('note')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary" wire:attr='disabled'>
-                                        <span wire:loading class="spinner-border spinner-border-sm" role="status"
-                                            aria-hidden="true">
-                                        </span>
-                                        Save Changes
-                                    </button>
-                                </div>
+                            </form>
+                        @else
+                            <!--Begin::Not any active subscription-->
+                            <div class="alert alert-info text-center text-white">
+                                <strong>
+                                    You don't have any active subscription.
+                                </strong>
                             </div>
-                        </form>
+                            <!--End::Not any active subscription-->
+                        @endif
                     </div>
                 </div>
             </div>

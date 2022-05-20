@@ -40,22 +40,21 @@ class Index extends Component
                 ->subscriptions()
                 ->active()
                 ->first();
-
-            //Allowed Customers
+            //Deadlines created with this subscription
+            $this->created_deadlines = User::CountDeadlinesWithSubscription($this->user->id, $this->active_subscription->id);
+            //Allowed Deadlines
             $allowed_deadlines = Admin::ProductAllowedDeadlines($this->active_subscription->name);
-
             //If null then set as unlimited
             if ($allowed_deadlines == null) {
                 $this->allowed_deadlines = "unlimited";
             } else {
                 $this->allowed_deadlines = $allowed_deadlines;
             }
-
             //If allowed deadlines are unlimited
             if ($this->allowed_deadlines == "unlimited") {
                 return true;
                 //If allowed deadlines are available
-            } elseif ($this->created_deadlines <= $this->allowed_deadlines) {
+            } elseif ($this->created_deadlines < $this->allowed_deadlines) {
                 return true;
                 //If nothing available
             } else {

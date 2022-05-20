@@ -181,7 +181,8 @@
                                             </div>
                                         </td>
                                         <!--Begin::If not ended-->
-                                        @if (!Auth::user()->subscription($subscription->name)->ended())
+                                        @if ($subscription->stripe_status == "active")
+
                                             <!--Begin::If canceled-->
                                             @if (Auth::user()->subscription($subscription->name)->canceled())
                                                 <td class="align-middle">
@@ -218,8 +219,10 @@
                                                 </button>
                                             </td>
                                         @endif
+
+
                                         <!--Begin::If not ended-->
-                                        @if (Auth::user()->subscription($subscription->name)->ended())
+                                        @if ($subscription->stripe_status == "canceled")
                                             <td class="align-middle">
                                                 <button class="btn btn-sm btn-danger disabled">
                                                     End
@@ -238,6 +241,7 @@
                                                 </form>
                                             </td>
                                         @endif
+
                                     </tr>
                                 @endforeach
                             </tbody>

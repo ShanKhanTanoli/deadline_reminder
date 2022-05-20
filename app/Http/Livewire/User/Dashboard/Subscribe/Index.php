@@ -49,7 +49,9 @@ class Index extends Component
             }
             //If Price is one_time
             if ($find->type == "one_time") {
-                return Stripe::CashierSingleCharge($user, $card, $this->product, $find->unit_amount);
+                session()->flash('error', 'Something went wrong');
+                return redirect(route('UserPlatformPlans'));
+                //return Stripe::CashierSingleCharge($user, $card, $this->product, $find->unit_amount);
             }
             //If Something else
             session()->flash('error', 'Something went wrong');

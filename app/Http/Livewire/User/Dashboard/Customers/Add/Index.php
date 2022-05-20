@@ -47,11 +47,11 @@ class Index extends Component
             if ($this->allowed_customers == "unlimited") {
                 return true;
                 //If allowed customers are available
-            }elseif ($this->created_customers <= $this->allowed_customers) {
+            }elseif ($this->created_customers < $this->allowed_customers) {
                 return true;
                 //If nothing available
             } else {
-                session()->flash('error', 'Your subscription allows you to create only ' . $allowed_customers . ' Customers.Please check your Subscription');
+                session()->flash('error', 'Your subscription allows you to create only ' . $this->allowed_customers . ' Customers.Please check your Subscription');
                 return redirect(route('UserCustomers'));
             }
 
@@ -102,7 +102,7 @@ class Index extends Component
                 return redirect(route('UserCustomers'));
                 //If nothing is available
             } else {
-                session()->flash('error', 'Your subscription allows you to create only ' . $allowed_customers . ' Customers.Please check your Subscription');
+                session()->flash('error', 'Your subscription allows you to create only ' . $this->allowed_customers . ' Customers.Please check your Subscription');
                 return redirect(route('UserCustomers'));
             }
         } catch (Exception $e) {

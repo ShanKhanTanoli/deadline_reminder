@@ -21,6 +21,19 @@ trait AdminStripePrices
         }
     }
 
+    public static function ActivePrices($load)
+    {
+        try {
+            $skey = StripeConfiguration::first()->secret_key;
+            $stripe = new \Stripe\StripeClient(
+                $skey
+            );
+            return $stripe->prices->all(['active' => true, 'limit' => $load]);
+        } catch (Exception $e) {
+            return session()->flash('error', 'Something went wrong');
+        }
+    }
+
     public static function CountPrices()
     {
         try {
@@ -30,6 +43,20 @@ trait AdminStripePrices
             );
             return $stripe->prices
                 ->all()->count();
+        } catch (Exception $e) {
+            return session()->flash('error', 'Something went wrong');
+        }
+    }
+
+    public static function CountActivePrices()
+    {
+        try {
+            $skey = StripeConfiguration::first()->secret_key;
+            $stripe = new \Stripe\StripeClient(
+                $skey
+            );
+            return $stripe->prices
+                ->all(['active' => true])->count();
         } catch (Exception $e) {
             return session()->flash('error', 'Something went wrong');
         }

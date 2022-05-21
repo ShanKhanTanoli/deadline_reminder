@@ -12,7 +12,7 @@ class Index extends Component
 
     public function render()
     {
-        $prices = Admin::Prices($this->load);
+        $prices = Admin::ActivePrices($this->load);
         return view('livewire.admin.dashboard.plans.index')
             ->with(['prices' => $prices])
             ->extends('layouts.dashboard')

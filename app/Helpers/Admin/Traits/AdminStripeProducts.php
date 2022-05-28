@@ -189,17 +189,31 @@ trait AdminStripeProducts
             return session()->flash('error', 'Something went wrong');
         }
     }
-    public static function AddRecurringProductWithPrice($name, $description = null, $amount, $interval_count, $interval)
+    public static function AddRecurringProductWithPrice($name, $description = null, $amount, $interval_count, $interval, $metadata = null)
     {
         try {
             $skey = StripeConfiguration::first()->secret_key;
             $stripe = new \Stripe\StripeClient(
                 $skey
             );
-            $product = $stripe->products->create([
-                'name' => $name,
-                'description' => $description,
-            ]);
+
+            //If Metadata is available
+            if ($metadata) {
+                $product = $stripe->products->create([
+                    'name' => $name,
+                    'description' => $description,
+                    $metadata,
+                ]);
+            }
+
+            //If Metadata is not available
+            if (!$metadata) {
+                $product = $stripe->products->create([
+                    'name' => $name,
+                    'description' => $description,
+                ]);
+            }
+
             return $stripe->prices->create([
                 'unit_amount' => $amount * 100,
                 'currency' => Admin::Currency(),
@@ -210,7 +224,7 @@ trait AdminStripeProducts
                 'product' => $product->id,
             ]);
         } catch (Exception $e) {
-            return session()->flash('error', 'Something went wrong');
+            return session()->flash('error', $e->getMessage());
         }
     }
     /*End::Products with prices*/

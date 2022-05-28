@@ -55,95 +55,54 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="input-group input-group-static my-3">
-                                        <label for="interval-count">Interval</label>
-                                        <input type="text" wire:model.defer='interval_count'
-                                            value="{{ old('interval_count') }}"
-                                            class="form-control  @error('interval_count') is-invalid @enderror"
-                                            placeholder="Interval">
-                                        @error('interval_count')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group input-group-static my-3">
-                                        <label for="billing-period">Billing Period</label>
-                                        <select type="text" wire:model.defer='interval'
-                                            class="form-control  @error('interval') is-invalid @enderror">
-                                            <option value="">Pick One</option>
-                                            <option value="day">Day</option>
-                                            <option value="week">Week</option>
-                                            <option value="month">Month</option>
-                                            <option value="year">Year</option>
-                                        </select>
-                                        @error('interval')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <!--Begin::Add Customers-->
                                 <div class="col-md-12">
-                                    <div class="form-check p-0">
-                                        <input wire:model='customers' class="form-check-input" type="checkbox"
-                                            id="fcustomers">
-                                        <label class="custom-control-label" for="customers">
-                                            Customers
-                                        </label>
+                                    <div class="input-group input-group-static my-3">
+                                        <label for="plan_type">Plan Type</label>
+                                        <select type="text" wire:model='plan_type'
+                                            class="form-control  @error('plan_type') is-invalid @enderror">
+                                            <option value="">Pick One</option>
+                                            <option value="onetime">One Time</option>
+                                            <option value="recurring">Recurring</option>
+                                        </select>
+                                        @error('plan_type')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
-                                <!--End::Add Customers-->
                                 <div class="col-md-12 text-center">
-                                    <span wire:loading wire:target='customers' class="spinner-border spinner-border-sm"
+                                    <span wire:loading wire:target='plan_type' class="spinner-border spinner-border-sm"
                                         role="status" aria-hidden="true">
                                     </span>
                                 </div>
-                                @if ($customers)
-                                    <div class="col-md-12">
+                                @if ($plan_type == 'recurring')
+                                    <div class="col-md-6">
                                         <div class="input-group input-group-static my-3">
-                                            <label for="add-customers">Customers</label>
-                                            <input type="text" wire:model.defer='add_customers'
-                                                value="{{ old('add_customers') }}"
-                                                class="form-control  @error('add_customers') is-invalid @enderror"
-                                                placeholder="Customers">
-                                            @error('add_customers')
+                                            <label for="interval-count">Interval</label>
+                                            <input type="text" wire:model.defer='interval_count'
+                                                value="{{ old('interval_count') }}"
+                                                class="form-control  @error('interval_count') is-invalid @enderror"
+                                                placeholder="Interval">
+                                            @error('interval_count')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
                                     </div>
-                                @endif
-                                <!--Begin::Add Deadlines-->
-                                <div class="col-md-12">
-                                    <div class="form-check p-0">
-                                        <input wire:model='deadlines' class="form-check-input" type="checkbox"
-                                            id="fdeadlines">
-                                        <label class="custom-control-label" for="deadlines">
-                                            Deadlines
-                                        </label>
-                                    </div>
-                                </div>
-                                <!--End::Add Deadlines-->
-                                <div class="col-md-12 text-center">
-                                    <span wire:loading wire:target='deadlines' class="spinner-border spinner-border-sm"
-                                        role="status" aria-hidden="true">
-                                    </span>
-                                </div>
-                                @if ($deadlines)
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="input-group input-group-static my-3">
-                                            <label for="add-deadlines">Deadlines</label>
-                                            <input type="text" wire:model.defer='add_deadlines'
-                                                value="{{ old('add_deadlines') }}"
-                                                class="form-control  @error('add_deadlines') is-invalid @enderror"
-                                                placeholder="Deadlines">
-                                            @error('add_deadlines')
+                                            <label for="billing-period">Billing Period</label>
+                                            <select type="text" wire:model.defer='interval'
+                                                class="form-control  @error('interval') is-invalid @enderror">
+                                                <option value="">Pick One</option>
+                                                <option value="day">Day</option>
+                                                <option value="week">Week</option>
+                                                <option value="month">Month</option>
+                                                <option value="year">Year</option>
+                                            </select>
+                                            @error('interval')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>

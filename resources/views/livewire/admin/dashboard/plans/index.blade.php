@@ -72,6 +72,12 @@
                                         Price
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Customers
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Deadlines
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Type
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -132,6 +138,32 @@
                                                         <h6 class="mb-0 text-sm">
                                                             {{ $price->unit_amount / 100 }}
                                                             {{ strtoupper($price->currency) }}
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle">
+                                                <div class="d-flex px-2 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">
+                                                            @if($customers = Admin::FindProduct($price->product)->metadata->customers)
+                                                                {{ $customers}}
+                                                            @else
+                                                            {{ __('Unlimited') }}
+                                                            @endif
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle">
+                                                <div class="d-flex px-2 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">
+                                                            @if($deadlines = Admin::FindProduct($price->product)->metadata->deadlines)
+                                                                {{ $deadlines}}
+                                                            @else
+                                                            {{ __('Unlimited') }}
+                                                            @endif
                                                         </h6>
                                                     </div>
                                                 </div>

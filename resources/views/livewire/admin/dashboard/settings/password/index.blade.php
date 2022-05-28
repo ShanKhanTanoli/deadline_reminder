@@ -1,9 +1,7 @@
 <div class="container-fluid my-3 py-3">
     <div class="row mb-5">
         <!--Begin::Sidebar-->
-        @include(
-            'livewire.admin.dashboard.settings.partials.sidebar'
-        )
+        @include('livewire.admin.dashboard.settings.partials.sidebar')
         <!--Begin::Sidebar-->
         <div class="col-lg-9 mt-lg-0 mt-4">
             <!--Begin::Alerts-->
@@ -21,7 +19,7 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="container">
-                                <form>
+                                <form wire:submit.prevent='UpdatePassword'>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label for="password">New Password</label>
@@ -56,8 +54,7 @@
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-md-6">
-                                            <button type="button" class="btn btn-primary" wire:attr='disabled'
-                                                wire:click='UpdatePassword'>
+                                            <button type="submit" class="btn btn-primary" wire:attr='disabled'>
                                                 <span wire:loading class="spinner-border spinner-border-sm"
                                                     role="status" aria-hidden="true"></span>
                                                 Save Changes

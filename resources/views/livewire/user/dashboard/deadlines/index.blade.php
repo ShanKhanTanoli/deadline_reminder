@@ -2,7 +2,7 @@
     @include('errors.alerts')
     <div class="row mb-4">
         <div class="col-xl-6 col-sm-6 mb-xl-0 mb-4">
-            <a href="#">
+            <a href="{{ route('UserDeadlines') }}">
                 <div class="card">
                     <div class="card-header p-3 pt-2" style="border-radius: 0;">
                         <div

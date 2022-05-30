@@ -7,24 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TrainerNotification extends Mailable
+class Reminder extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $from;
-    public $to;
-    public $name;
+    public $data = [];
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($from,$to,$name)
+    public function __construct($data)
     {
-        // $this->from = $from;
-        // $this->to = $to;
-        $this->name = $name;
+        $this->data = $data;
     }
 
     /**
@@ -35,8 +31,7 @@ class TrainerNotification extends Mailable
     public function build()
     {
         return $this->from('support@email.com')
-        ->subject('A sample email')
-        ->to('shankhantanoli@gmail.com')
-        ->view('emails.appointment-email');
+            ->subject(ucfirst($this->data['type_of_renew']) . ' ' . ucfirst($this->data['renew_state']))
+            ->view('emails.reminder-email');
     }
 }

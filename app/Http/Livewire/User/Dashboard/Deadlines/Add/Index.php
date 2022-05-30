@@ -8,7 +8,10 @@ use App\Models\Deadline;
 use App\Helpers\User\User;
 use Illuminate\Support\Str;
 use App\Helpers\Admin\Admin;
+use App\Mail\Reminder;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class Index extends Component
 {
@@ -90,24 +93,168 @@ class Index extends Component
             'check_reminder' => 'required|in:1',
             'reminder' => 'required|string|in:30_days_before,60_days_before',
         ], $msg);
+
         try {
             //If allowed customers are unlimited
             if ($this->allowed_deadlines == "unlimited") {
+
                 $data = [
                     'subscription_id' => $this->active_subscription->id,
                     'user_id' => Auth::user()->id,
                     'slug' => strtoupper(Str::random(20)),
                 ];
+                //Create Deadline
                 Deadline::create(array_merge($data, $validated));
+
+                //Assign Data
+                $this->customer_id = $validated['customer_id'];
+                $this->date = $validated['date'];
+                $this->amount = $validated['amount'];
+                $this->renew_state = $validated['renew_state'];
+                $this->type_of_renew = $validated['type_of_renew'];
+                $this->reminder = $validated['reminder'];
+
+                //Get Reminder Values
+                if ($this->reminder == "30_days_before") {
+                    $this->reminder = 30;
+                }
+                if ($this->reminder == "60_days_before") {
+                    $this->reminder = 60;
+                }
+
+                //Send Email
+                dispatch(function () {
+
+                    //Get Renew State Values
+                    if ($this->renew_state == "to_renew") {
+                        $this->renew_state = "To Renew";
+                    }
+                    if ($this->renew_state == "waiting_cash") {
+                        $this->renew_state = "Waiting for Cash";
+                    }
+                    if ($this->renew_state == "renewed") {
+                        $this->renew_state = "Renewed";
+                    }
+                    if ($this->renew_state == "deleted") {
+                        $this->renew_state = "Deleted";
+                    }
+
+                    //Get Type of Renew Values
+                    if ($this->type_of_renew == "domain") {
+                        $this->type_of_renew = "Domain";
+                    }
+                    if ($this->type_of_renew == "hosting") {
+                        $this->type_of_renew = "Hosting";
+                    }
+                    if ($this->type_of_renew == "hosting_email") {
+                        $this->type_of_renew = "Hosting Email";
+                    }
+                    if ($this->type_of_renew == "wpml") {
+                        $this->type_of_renew = "WPML";
+                    }
+                    if ($this->type_of_renew == "privacy_cookie") {
+                        $this->type_of_renew = "Privacy Cookie";
+                    }
+                    if ($this->type_of_renew == "other") {
+                        $this->type_of_renew = "Other";
+                    }
+                    //Find Customer
+                    $customer = Customer::find($this->customer_id);
+                    //Data to send
+                    $data = [
+                        'name' => $customer->name,
+                        'type_of_renew' => $this->type_of_renew,
+                        'renew_state' => $this->renew_state,
+                        'date' => date('d-M-Y'),
+                        'amount' => $this->amount . ' ' . strtoupper(Admin::Currency()),
+                    ];
+                    //Mail To
+                    Mail::to($customer->email)
+                        ->send(new Reminder($data));
+                    //Delay
+                })->delay(now()->addDays($this->reminder));
+
                 session()->flash('success', 'Added Successfully');
                 return redirect(route('UserDeadlines'));
             } elseif ($this->created_deadlines < $this->allowed_deadlines) {
+
                 $data = [
                     'subscription_id' => $this->active_subscription->id,
                     'user_id' => Auth::user()->id,
                     'slug' => strtoupper(Str::random(20)),
                 ];
+
+                //Create Deadline
                 Deadline::create(array_merge($data, $validated));
+
+                //Assign Data
+                $this->customer_id = $validated['customer_id'];
+                $this->date = $validated['date'];
+                $this->amount = $validated['amount'];
+                $this->renew_state = $validated['renew_state'];
+                $this->type_of_renew = $validated['type_of_renew'];
+                $this->reminder = $validated['reminder'];
+
+                //Get Reminder Values
+                if ($this->reminder == "30_days_before") {
+                    $this->reminder = 30;
+                }
+                if ($this->reminder == "60_days_before") {
+                    $this->reminder = 60;
+                }
+
+                //Send Email
+                dispatch(function () {
+
+                    //Get Renew State Values
+                    if ($this->renew_state == "to_renew") {
+                        $this->renew_state = "To Renew";
+                    }
+                    if ($this->renew_state == "waiting_cash") {
+                        $this->renew_state = "Waiting for Cash";
+                    }
+                    if ($this->renew_state == "renewed") {
+                        $this->renew_state = "Renewed";
+                    }
+                    if ($this->renew_state == "deleted") {
+                        $this->renew_state = "Deleted";
+                    }
+
+                    //Get Type of Renew Values
+                    if ($this->type_of_renew == "domain") {
+                        $this->type_of_renew = "Domain";
+                    }
+                    if ($this->type_of_renew == "hosting") {
+                        $this->type_of_renew = "Hosting";
+                    }
+                    if ($this->type_of_renew == "hosting_email") {
+                        $this->type_of_renew = "Hosting Email";
+                    }
+                    if ($this->type_of_renew == "wpml") {
+                        $this->type_of_renew = "WPML";
+                    }
+                    if ($this->type_of_renew == "privacy_cookie") {
+                        $this->type_of_renew = "Privacy Cookie";
+                    }
+                    if ($this->type_of_renew == "other") {
+                        $this->type_of_renew = "Other";
+                    }
+                    //Find Customer
+                    $customer = Customer::find($this->customer_id);
+                    //Data to send
+                    $data = [
+                        'name' => $customer->name,
+                        'type_of_renew' => $this->type_of_renew,
+                        'renew_state' => $this->renew_state,
+                        'date' => date('d-M-Y'),
+                        'amount' => $this->amount . ' ' . strtoupper(Admin::Currency()),
+                    ];
+                    //Mail To
+                    Mail::to($customer->email)
+                        ->send(new Reminder($data));
+                    //Delay
+                })->delay(now()->addDays($this->reminder));
+
                 session()->flash('success', 'Added Successfully');
                 return redirect(route('UserDeadlines'));
             } else {

@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="col-xl-3 col-sm-3 mb-xl-0 mb-4">
-            <a href="#">
+            <a href="{{ route('UserDeadlines') }}">
                 <div class="card">
                     <div class="card-header p-3 pt-2" style="border-radius: 0;">
                         <div

@@ -1,5 +1,5 @@
 @if (Session::has('success'))
-    <div class="position-fixed bottom-1 end-1 z-index-2">
+    <div class="position-fixed end-2 z-index-2">
         <div class="toast fade show p-2 mt-2 bg-success" role="alert" aria-live="assertive" id="dangerToast"
             aria-atomic="true">
             <div class="toast-header border-0 bg-success">
@@ -16,7 +16,7 @@
 @endif
 
 @if (Session::has('error'))
-    <div class="position-fixed bottom-1 end-1 z-index-2">
+    <div class="position-fixed end-2 z-index-2">
         <div class="toast fade show p-2 mt-2 bg-danger" role="alert" aria-live="assertive" id="dangerToast"
             aria-atomic="true">
             <div class="toast-header border-0 bg-danger">

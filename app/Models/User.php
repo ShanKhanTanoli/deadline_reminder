@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Setting;
+use App\Models\Deadline;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -61,5 +62,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function details()
     {
         return $this->hasOne(UserBusinessDetail::class);
+    }
+
+    public function deadlines()
+    {
+        return $this->hasMany(Deadline::class);
     }
 }

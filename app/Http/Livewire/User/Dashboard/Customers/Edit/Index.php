@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
-    public $customer, $name, $email, $address, $note;
+    public $customer, $name, $email, $number, $address, $note;
 
     public function mount($slug)
     {
@@ -18,6 +18,7 @@ class Index extends Component
             $this->customer = $customer;
             $this->name = $customer->name;
             $this->email = $customer->email;
+            $this->number = $customer->number;
             $this->address = $customer->address;
             $this->note = $customer->note;
         } else {
@@ -40,9 +41,16 @@ class Index extends Component
             $validated = $this->validate([
                 'name' => 'required|string',
                 'email' => 'required|email|unique:users,email,' . $this->customer->id,
+                'number' => 'required|numeric|unique:users,number,' . $this->customer->id,
                 'address' => 'required|string',
                 'note' => 'required|string',
+            ],
+            [
+                'name.required' => 'Enter Contact Details',
             ]);
+
+            //dd($validated);
+
             try {
                 $this->customer->update($validated);
                 session()->flash('success', 'Updated Successfully');

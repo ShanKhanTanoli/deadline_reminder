@@ -54,30 +54,21 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        #
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Name
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Email
                                     </th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Address
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Note
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Deadlines
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
                                         View Deadline
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
                                         Edit
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
                                         Delete
                                     </th>
                                 </tr>
@@ -85,15 +76,6 @@
                             <tbody>
                                 @foreach ($customers as $customer)
                                     <tr>
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">
-                                                        {{ $loop->iteration }}
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
                                         <td>
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
@@ -116,55 +98,37 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">
-                                                        {{ Str::substr($customer->address, 0, 15) }}...
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">
                                                         {{ Str::substr($customer->note, 0, 15) }}...
                                                     </h6>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">
-                                                        {{ Customer::CountDeadlines($customer->id) }}
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle">
-                                            <button class="btn btn-sm btn-info"
+                                        <td class="align-middle text-center">
+                                            <button class="btn"
                                                 wire:click='CustomerDeadlines("{{ $customer->id }}")'>
                                                 <span wire:loading
                                                     wire:target='CustomerDeadlines("{{ $customer->id }}")'
                                                     class="spinner-border spinner-border-sm" role="status"
                                                     aria-hidden="true"></span>
-                                                View Deadlines
+                                                <i class="fas fa-eye text-info"></i>
                                             </button>
                                         </td>
-                                        <td class="align-middle">
-                                            <button class="btn btn-sm btn-success"
+                                        <td class="align-middle text-center">
+                                            <button class="btn"
                                                 wire:click='Edit("{{ $customer->id }}")'>
                                                 <span wire:loading wire:target='Edit("{{ $customer->id }}")'
                                                     class="spinner-border spinner-border-sm" role="status"
                                                     aria-hidden="true"></span>
-                                                Edit
+                                                <i class="fas fa-edit text-success"></i>
                                             </button>
                                         </td>
-                                        <td class="align-middle">
-                                            <button class="btn btn-sm btn-danger"
-                                                wire:click='Delete("{{ $customer->id }}")'>
-                                                <span wire:loading wire:target='Delete("{{ $customer->id }}")'
+                                        <td class="align-middle text-center">
+                                            <button class="btn"
+                                                wire:click='deleteconfirm("{{ $customer->id }}")'>
+                                                <span wire:loading wire:target='deleteconfirm("{{ $customer->id }}")'
                                                     class="spinner-border spinner-border-sm" role="status"
                                                     aria-hidden="true"></span>
-                                                Delete
+                                                <i class="fas fa-times text-danger"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -179,4 +143,43 @@
             </div>
         </div>
     </div>
+    @if($delete)
+        <!--Begin::Delete Modal-->
+        <div wire:ignore.self class="modal fade" id="Delete" tabindex="-1" aria-labelledby="DeleteLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <h1 class="text-center mb-2">
+                        <i class="fas fa-times text-danger" style="font-size: 50px;"></i>
+                    </h1>
+                    <h3 class="text-center">Delete Customer</h3>
+                    <p>
+                        <strong>
+                            Are you sure you want to delete the <span class="text-danger">Customer {{ $delete->name }}</span> and all the deadlines associated with him? the operation is not reversible
+                        </strong>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button wire:click="Delete('{{ $delete->id }}')" type="button" class="btn btn-danger btn-sm">
+                        {{ __('Delete') }}
+                        <div wire:loading wire:target="Delete('{{ $delete->id }}')"
+                            class="spinner-border spinner-border-sm" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End::Delete Modal-->
+    @endif
+    @section('scripts')
+        <script>
+            Livewire.on('delete', function() {
+                $('#Delete').modal('show');
+            })
+        </script>
+    @endsection
 </div>

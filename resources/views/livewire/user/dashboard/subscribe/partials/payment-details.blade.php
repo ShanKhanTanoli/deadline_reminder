@@ -41,7 +41,7 @@
                     <div class="col-md-6">
                         <div class="input-group input-group-static my-3">
                             <label for="card_expiry">Card Expiry</label>
-                            <input id="card-expiry" type="date" wire:model.defer='card_expiry'
+                            <input id="card-expiry" type="month" wire:model.defer='card_expiry'
                                 value="{{ old('card_expiry') }}"
                                 class="form-control  @error('card_expiry') is-invalid @enderror"
                                 placeholder="Card Expiry">

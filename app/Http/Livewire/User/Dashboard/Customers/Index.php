@@ -11,6 +11,8 @@ class Index extends Component
 {
     use WithPagination;
 
+    public $delete;
+
     protected $paginationTheme = 'bootstrap';
 
     public function render()
@@ -36,11 +38,20 @@ class Index extends Component
         } else return session()->flash('error', 'No such customer found');
     }
 
+    public function deleteconfirm($id)
+    {
+        if ($customer = User::FindCustomer(Auth::user()->id, $id)) {
+            $this->delete = $customer;
+            $this->emit(['delete']);
+        } else return session()->flash('error', 'No such customer found');
+    }
+
     public function Delete($id)
     {
         if ($customer = User::FindCustomer(Auth::user()->id, $id)) {
             $customer->delete();
-            return session()->flash('success', 'Deleted Successfully');
+            session()->flash('success', 'Deleted Successfully');
+            return redirect(route('UserCustomers'));
         } else return session()->flash('error', 'No such customer found');
     }
 }

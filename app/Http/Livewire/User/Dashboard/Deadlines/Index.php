@@ -11,11 +11,30 @@ class Index extends Component
 {
     use WithPagination;
 
+    public $delete,$renewal_state,$renewal_type,$search,$result;
+
     protected $paginationTheme = 'bootstrap';
+
 
     public function render()
     {
-        $deadlines = User::LatestDeadlinesPaginate(Auth::user()->id, 10);
+        $deadlines = $this->result = Auth::user()->deadlines;
+
+        if($this->renewal_state){
+            $deadlines = $this->result->where('renew_state',$this->renewal_state);
+            $this->reset(['renewal_type']);
+        }
+
+        if($this->renewal_type){
+            $deadlines = $this->result->where('type_of_renew',$this->renewal_type);
+            $this->reset(['renewal_state']);
+        }
+
+        if($this->search){
+            dd($this->search);
+        }
+
+        $deadlines = $deadlines->take(6);
         return view('livewire.user.dashboard.deadlines.index')
             ->with(['deadlines' => $deadlines])
             ->extends('layouts.dashboard')
@@ -44,11 +63,20 @@ class Index extends Component
         } else return session()->flash('error', 'No such deadline found');
     }
 
+    public function deleteconfirm($id)
+    {
+        if ($deadline = User::FindDeadline(Auth::user()->id, $id)) {
+            $this->delete = $deadline;
+            $this->emit(['delete']);
+        } else return session()->flash('error', 'No such deadline found');
+    }
+
     public function Delete($id)
     {
         if ($deadline = User::FindDeadline(Auth::user()->id, $id)) {
             $deadline->delete();
-            return session()->flash('success', 'Deleted Successfully');
+            session()->flash('success', 'Deleted Successfully');
+            return redirect(route('UserDeadlines'));
         } else return session()->flash('error', 'No such deadline found');
     }
 }

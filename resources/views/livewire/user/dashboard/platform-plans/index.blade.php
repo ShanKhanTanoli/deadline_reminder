@@ -8,7 +8,7 @@
                 @if ($price->active)
                     <!--Begin::If Product is Active-->
                     @if ($product = Admin::FindProduct($price->product)->active)
-                        <div class="col-lg-3 mb-lg-0 mt-4">
+                        <div class="col-lg-4 mb-lg-0 mt-4">
                             <div class="card shadow-lg">
                                 <span class="badge rounded-pill bg-primary text-white mx-auto mt-5">
                                     @if ($product = Admin::FindProduct($price->product))

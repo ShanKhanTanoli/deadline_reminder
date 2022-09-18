@@ -52,12 +52,12 @@
                     <div class="container">
                         <form wire:submit.prevent='Update'>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="input-group input-group-static my-3">
-                                        <label for="name">Name</label>
+                                        <label for="name">Contact Details</label>
                                         <input type="text" wire:model.defer='name' value="{{ old('name') }}"
                                             class="form-control  @error('name') is-invalid @enderror"
-                                            placeholder="Enter Name">
+                                            placeholder="Enter Contact Details">
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -65,10 +65,23 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <div class="input-group input-group-static my-3">
+                                        <label for="number">Phone Number</label>
+                                        <input type="number" wire:model.defer='number' value="{{ old('number') }}"
+                                            class="form-control  @error('number') is-invalid @enderror"
+                                            placeholder="Enter Phone Number">
+                                        @error('number')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="input-group input-group-static my-3">
                                         <label for="email">Email</label>
-                                        <input type="text" wire:model.defer='email' value="{{ old('email') }}"
+                                        <input type="email" wire:model.defer='email' value="{{ old('email') }}"
                                             class="form-control  @error('email') is-invalid @enderror"
                                             placeholder="Enter Email">
                                         @error('email')
@@ -93,8 +106,7 @@
                                 <div class="col-md-12">
                                     <div class="input-group input-group-static my-3">
                                         <label for="note">Note</label>
-                                        <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror"
-                                            placeholder="Enter Note">{{ old('note') }}</textarea>
+                                        <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror" placeholder="Enter Note">{{ old('note') }}</textarea>
                                         @error('note')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

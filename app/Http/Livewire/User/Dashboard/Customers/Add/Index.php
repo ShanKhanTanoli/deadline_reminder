@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
-    public $name, $email, $address, $note;
+    public $name, $email,$number, $address, $note;
 
     public $active_subscription,
         $user,
@@ -72,8 +72,11 @@ class Index extends Component
         $validated = $this->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:customers,email',
+            'number' => 'required|numeric|unique:customers,number',
             'address' => 'required|string',
             'note' => 'required|string',
+        ],[
+            'name.required' => 'Enter Contact Details',
         ]);
         try {
             $data = [
@@ -81,6 +84,7 @@ class Index extends Component
                 'user_id' => Auth::user()->id,
                 'name' => $validated['name'],
                 'email' => $validated['email'],
+                'number' => $validated['number'],
                 'address' => $validated['address'],
                 'note' => $validated['note'],
                 'role_id' => 2,

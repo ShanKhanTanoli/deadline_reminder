@@ -1,0 +1,15 @@
+1 => open .env and change these values...
+
+For example DB_DATABASE=deadline_reminder is a databse on my local system...you can create your own Database in XAMPP or WAMPP
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=deadline_reminder
+DB_USERNAME=root
+DB_PASSWORD=
+
+2 => After connecting to Database , run the following Command [ php artisan migrate:fresh ] or populate Data manually by using SQL File
+
+This Command [ php artisan que:work ] will run the Schedules...
+You can use this Command [ php artisan que:work ] for Task Scheduling...

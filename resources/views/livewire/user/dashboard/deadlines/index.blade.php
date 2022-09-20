@@ -79,7 +79,8 @@
                                     </label>
                                 </div>
                                 <div class="dataTable-search">
-                                    <input wire:model.debounce.500ms="search" class="dataTable-input" placeholder="Search..." type="text">
+                                    <input wire:model.debounce.500ms="search" class="dataTable-input"
+                                        placeholder="Search..." type="text">
                                 </div>
                             </div>
                             <table class="table align-items-center mb-0">
@@ -111,6 +112,10 @@
                                             class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
                                             Chronologies
                                         </th>
+                                        {{-- <th
+                                            class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Edit
+                                        </th> --}}
                                         <th
                                             class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
                                             Delete
@@ -152,22 +157,22 @@
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
                                                         @if ($deadline->renew_state == 'to_renew')
-                                                            <span class="badge bg-gradient-primary">
+                                                            <span class="to_renew">
                                                                 To Renew
                                                             </span>
                                                         @endif
                                                         @if ($deadline->renew_state == 'waiting_cash')
-                                                            <span class="badge bg-gradient-primary">
+                                                            <span class="waiting_cash">
                                                                 Waiting Cash
                                                             </span>
                                                         @endif
                                                         @if ($deadline->renew_state == 'renewed')
-                                                            <span class="badge bg-gradient-success">
+                                                            <span class="renewed">
                                                                 Renewed
                                                             </span>
                                                         @endif
                                                         @if ($deadline->renew_state == 'deleted')
-                                                            <span class="badge bg-gradient-danger">
+                                                            <span class="deleted">
                                                                 Deleted
                                                             </span>
                                                         @endif
@@ -178,32 +183,32 @@
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
                                                         @if ($deadline->type_of_renew == 'domain')
-                                                            <span class="badge bg-gradient-primary">
+                                                            <span class="domain">
                                                                 Domain
                                                             </span>
                                                         @endif
                                                         @if ($deadline->type_of_renew == 'hosting')
-                                                            <span class="badge bg-gradient-primary">
+                                                            <span class="hosting">
                                                                 Hosting
                                                             </span>
                                                         @endif
                                                         @if ($deadline->type_of_renew == 'hosting_email')
-                                                            <span class="badge bg-gradient-primary">
+                                                            <span class="hosting_email">
                                                                 Hosting Email
                                                             </span>
                                                         @endif
                                                         @if ($deadline->type_of_renew == 'wpml')
-                                                            <span class="badge bg-gradient-primary">
+                                                            <span class="wpml">
                                                                 wpml
                                                             </span>
                                                         @endif
                                                         @if ($deadline->type_of_renew == 'privacy_cookie')
-                                                            <span class="badge bg-gradient-primary">
+                                                            <span class="privacy_cookie">
                                                                 Privacy Cookie
                                                             </span>
                                                         @endif
                                                         @if ($deadline->type_of_renew == 'other')
-                                                            <span class="badge bg-gradient-dark">
+                                                            <span class="other">
                                                                 other
                                                             </span>
                                                         @endif
@@ -245,6 +250,16 @@
                                                     View Details
                                                 </button>
                                             </td>
+                                            {{-- <td class="text-center">
+                                                <button class="btn btn-sm btn-primary"
+                                                    wire:click='Edit("{{ $deadline->id }}")'>
+                                                    <span wire:loading
+                                                        wire:target='Edit("{{ $deadline->id }}")'
+                                                        class="spinner-border spinner-border-sm" role="status"
+                                                        aria-hidden="true"></span>
+                                                    Edit
+                                                </button>
+                                            </td> --}}
                                             <td class="text-center">
                                                 <button class="btn"
                                                     wire:click='deleteconfirm("{{ $deadline->id }}")'>
@@ -262,12 +277,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
-
-                </div>
+                @if (Auth::user()->deadlines->count() > $deadlines->count())
+                    <div class="card-footer text-center">
+                        <button type="button" class="btn btn-primary btn-sm" wire:attr='disabled'
+                            wire:click='loadMore'>
+                            <span wire:loading wire:target='loadMore' class="spinner-border spinner-border-sm" role="status"
+                                aria-hidden="true">
+                            </span>
+                            Load More
+                        </button>
+                    </div>
+                @endif
             </div>
-
-
         </div>
     </div>
     @if ($delete)

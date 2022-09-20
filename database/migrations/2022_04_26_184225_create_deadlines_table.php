@@ -57,6 +57,8 @@ return new class extends Migration
 
             $table->mediumText('note')->nullable();
 
+            $table->mediumText('private_note')->nullable();
+
             $table->enum('reminder', ['30_days_before', '60_days_before'])
                 ->nullable();
 
@@ -65,22 +67,23 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // for ($customer = 1; $customer < 10; $customer++) {
-        //     for ($deadline = 1; $deadline < mt_rand(5, 10); $deadline++) {
-        //         Deadline::create([
-        //             'customer_id' => $customer,
-        //             'user_id' => 2,
-        //             'name' => 'Deadline' . $deadline,
-        //             'date' => date('Y-' . mt_rand(2, 3) . '-' . mt_rand(1, 28)),
-        //             'amount' => mt_rand(10, 100),
-        //             'renew_state' => 'to_renew',
-        //             'type_of_renew' => 'domain',
-        //             'note' => 'This is Note',
-        //             'reminder' => '30_days_before',
-        //             'slug' => strtoupper(Str::random(20)),
-        //         ]);
-        //     }
-        // }
+        for ($customer = 1; $customer < 10; $customer++) {
+            for ($deadline = 1; $deadline < mt_rand(5, 10); $deadline++) {
+                Deadline::create([
+                    'customer_id' => $customer,
+                    'user_id' => 2,
+                    'name' => 'Deadline' . $deadline,
+                    'date' => date('Y-' . mt_rand(2, 3) . '-' . mt_rand(1, 28)),
+                    'amount' => mt_rand(10, 100),
+                    'renew_state' => 'to_renew',
+                    'type_of_renew' => 'domain',
+                    'note' => 'This is a Public Note',
+                    'private_note' => 'This is a Private Note',
+                    'reminder' => '30_days_before',
+                    'slug' => strtoupper(Str::random(20)),
+                ]);
+            }
+        }
     }
 
     /**

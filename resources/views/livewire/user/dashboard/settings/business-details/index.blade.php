@@ -1,15 +1,15 @@
 <div class="container-fluid my-3 py-3">
+    <!--Begin::Alerts-->
+    @include('errors.alerts')
+    <!--End::Alerts-->
     <div class="row mb-5">
         <!--Begin::Sidebar-->
         @include('livewire.user.dashboard.settings.partials.sidebar')
         <!--Begin::Sidebar-->
         <div class="col-lg-9 mt-lg-0 mt-4">
-            <!--Begin::Alerts-->
-            @include('errors.alerts')
-            <!--End::Alerts-->
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card" style="z-index:0;">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-primary shadow-primary border-radius-lg pt-4 pb-3">
                                 <h6 class="text-white text-capitalize ps-3">
@@ -49,7 +49,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="input-group input-group-static my-3">
                                                 <label for="business_phone">Business Phone</label>
                                                 <input type="text" wire:model.defer='business_phone'
@@ -63,12 +63,49 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="input-group input-group-static my-3">
+                                                <label for="vat_id">VAT ID</label>
+                                                <input type="text" wire:model.defer='vat_id'
+                                                    value="{{ old('vat_id') }}"
+                                                    class="form-control  @error('vat_id') is-invalid @enderror"
+                                                    placeholder="Enter VAT ID">
+                                                @error('vat_id')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         <div class="col-md-12">
                                             <div class="input-group input-group-static my-3">
-                                                <label for="business_address">Business Address</label>
+                                                <label for="business_address">Billing Address</label>
                                                 <textarea wire:model.defer='business_address' class="form-control  @error('business_address') is-invalid @enderror"
-                                                    placeholder="Enter Business Address">{{ old('business_address') }}</textarea>
+                                                    placeholder="Enter Billing Address">{{ old('business_address') }}</textarea>
                                                 @error('business_address')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="input-group input-group-static my-3">
+                                                <label for="currency_id">Currency</label>
+                                                <select wire:model.defer='currency_id'
+                                                    class="form-control  @error('currency_id') is-invalid @enderror">
+                                                    <option value="">Select Currency</option>
+                                                    @forelse (Currency::all() as $currency)
+                                                        <option value="{{ $currency->id }}">
+                                                            {{ strtoupper($currency->name) }}
+                                                            -
+                                                            {{ $currency->description }}
+                                                        </option>
+                                                    @empty
+                                                        <option value="">No currency found</option>
+                                                    @endforelse
+                                                </select>
+                                                @error('currency_id')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>

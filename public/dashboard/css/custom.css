@@ -1,0 +1,146 @@
+/*--------------------------------
+
+This is the Custom CSS/
+
+-------------------------------- */
+
+.to_renew{
+    display: inline-block;
+    padding: 0.55em 0.9em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.45rem;
+    background-color: #1a73e8;
+}
+
+.waiting_cash{
+    display: inline-block;
+    padding: 0.55em 0.9em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.45rem;
+    background-color: #1a73e8;
+}
+
+.renewed{
+    display: inline-block;
+    padding: 0.55em 0.9em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.45rem;
+    background-color: #1a73e8;
+}
+
+.deleted{
+    display: inline-block;
+    padding: 0.55em 0.9em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.45rem;
+    background-color: #1a73e8;
+}
+
+.domain{
+    display: inline-block;
+    padding: 0.55em 0.9em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.45rem;
+    background-color: #1a73e8;
+}
+
+.hosting{
+    display: inline-block;
+    padding: 0.55em 0.9em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.45rem;
+    background-color: #1a73e8;
+}
+
+.hosting_email{
+    display: inline-block;
+    padding: 0.55em 0.9em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.45rem;
+    background-color: #1a73e8;
+}
+
+.wpml{
+    display: inline-block;
+    padding: 0.55em 0.9em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.45rem;
+    background-color: #1a73e8;
+}
+
+.privacy_cookie{
+    display: inline-block;
+    padding: 0.55em 0.9em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.45rem;
+    background-color: #1a73e8;
+}
+
+.other{
+    display: inline-block;
+    padding: 0.55em 0.9em;
+    font-size: .75em;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.45rem;
+    background-color: #1a73e8;
+}
+

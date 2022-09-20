@@ -20,6 +20,15 @@
                 </a>
             </li>
             <li wire:ignore.self
+                class="nav-item @if (Request::path() == 'User/Settings/MyEmail') active bg-gradient-primary @else @endif">
+                <a wire:ignore.self
+                    class="nav-link text-dark d-flex @if (Request::path() == 'User/Settings/MyEmail') active text-white @else @endif"
+                    href="{{ route('UserEditMailTemplate') }}">
+                    <i class="fas fa-envelope me-2"></i>
+                    <span class="text-sm">My Email</span>
+                </a>
+            </li>
+            <li wire:ignore.self
                 class="nav-item @if (Request::path() == 'User/Settings/Password') active bg-gradient-primary @else @endif">
                 <a wire:ignore.self
                     class="nav-link text-dark d-flex @if (Request::path() == 'User/Settings/Password') active text-white @else @endif"

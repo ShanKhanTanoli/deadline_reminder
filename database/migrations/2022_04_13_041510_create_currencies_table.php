@@ -34,24 +34,6 @@ return new class extends Migration
             'description' => 'Europe',
             'slug' => Str::random(10),
         ]);
-
-        Currency::create([
-            'name' => 'pkr',
-            'description' => 'Pakistan',
-            'slug' => Str::random(10),
-        ]);
-
-        Currency::create([
-            'name' => 'inr',
-            'description' => 'India',
-            'slug' => Str::random(10),
-        ]);
-
-        Currency::create([
-            'name' => 'gbp',
-            'description' => 'Great Britian',
-            'slug' => Str::random(10),
-        ]);
     }
 
     /**

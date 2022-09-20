@@ -29,7 +29,6 @@ return new class extends Migration
             $table->string('company_email')->nullable();
             $table->string('company_phone')->nullable();
             $table->string('company_address')->nullable();
-
             //Currencies
             $table->unsignedBigInteger('currency_id')->nullable();
             $table->foreign('currency_id')->references('id')

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*Begin::Dashboard*/
@@ -35,6 +36,7 @@ use App\Http\Livewire\User\Dashboard\Subscriptions\Index as Subscriptions;
 /*Begin::Settings*/
 use App\Http\Livewire\User\Dashboard\Settings\BusinessDetails\Index as EditBusinessDetails;
 use App\Http\Livewire\User\Dashboard\Settings\Profile\Index as EditProfile;
+use App\Http\Livewire\User\Dashboard\Settings\MailTemplate\Index as EditMailTemplate;
 use App\Http\Livewire\User\Dashboard\Settings\Password\Index as EditPassword;
 /*End::Settings*/
 
@@ -84,14 +86,23 @@ Route::middleware(['auth', 'user'])->prefix('User')->group(function () {
 
     /*Begin::Subscriptions*/
     Route::get('Subscriptions', Subscriptions::class)
-    ->name('UserSubscriptions');
+        ->name('UserSubscriptions');
     /*End::Subscriptions*/
 
     /*Begin::Settings*/
     Route::get('Settings/BusinessDetails', EditBusinessDetails::class)
         ->name('UserEditBusinessDetails');
-    Route::get('Settings/Profile', EditProfile::class)->name('UserEditProfile');
-    Route::get('Settings/Password', EditPassword::class)->name('UserEditPassword');
+    Route::get('Settings/Profile', EditProfile::class)
+        ->name('UserEditProfile');
+
+    Route::get('Settings/MyEmail', EditMailTemplate::class)
+        ->name('UserEditMailTemplate');
+
+    Route::post('UserSaveEmailTemplate', [UserController::class,'UserSaveEmailTemplate'])
+        ->name('UserSaveEmailTemplate');
+
+    Route::get('Settings/Password', EditPassword::class)
+        ->name('UserEditPassword');
     /*End::Settings*/
 });
 /*End::Auth,User Group*/

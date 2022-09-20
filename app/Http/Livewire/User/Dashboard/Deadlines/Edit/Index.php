@@ -20,6 +20,7 @@ class Index extends Component
         $renew_state,
         $type_of_renew,
         $note,
+        $private_note,
         $reminder;
 
     public function mount($slug)
@@ -34,6 +35,7 @@ class Index extends Component
             $this->renew_state = $deadline->renew_state;
             $this->type_of_renew = $deadline->type_of_renew;
             $this->note = $deadline->note;
+            $this->private_note = $deadline->private_note;
             $this->reminder = $deadline->reminder;
             $this->check_reminder = 1;
         } else {
@@ -61,6 +63,7 @@ class Index extends Component
                 'renew_state' => 'required|string|in:to_renew,waiting_cash,renewed,deleted',
                 'type_of_renew' => 'required|string|in:domain,hosting,hosting_email,wpml,privacy_cookie,other',
                 'note' => 'required|string',
+                'private_note' => 'required|string',
                 'check_reminder' => 'required|in:1',
                 'reminder' => 'required|string|in:30_days_before,60_days_before',
             ]);
@@ -77,6 +80,7 @@ class Index extends Component
                     'renew_state' => $validated['renew_state'],
                     'type_of_renew' => $validated['type_of_renew'],
                     'note' => $validated['note'],
+                    'private_note' => $validated['private_note'],
                     'reminder' => $validated['reminder'],
                 ];
 

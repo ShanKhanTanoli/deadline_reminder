@@ -259,6 +259,12 @@
                                             {!! Str::ucfirst($data['renew_state']) !!} at {!! date('d-m-Y',strtotime($data['date'])) !!}.
                                             The Amount is only {!! $data['amount'] !!}<br />
                                         </p>
+                                        <p style="line-height: 24px;margin-bottom:15px;">
+                                            <strong>
+                                                Note :
+                                            </strong>
+                                            {!! $data['note'] !!}
+                                        </p>
                                         <p style="line-height: 24px">
                                             From ,<br /> The {{ Setting::Logo() }} team.
                                         </p>

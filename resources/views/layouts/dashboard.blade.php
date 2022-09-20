@@ -19,6 +19,8 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('dashboard/css/material-dashboard.css?v=3.0.1') }}" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Custom CSS -->
+    <link id="pagestyle" href="{{ asset('dashboard/css/custom.css') }}" rel="stylesheet" />
     @livewireStyles
 </head>
 

@@ -19,6 +19,7 @@ class Deadline extends Model
         'renew_state',
         'type_of_renew',
         'note',
+        'private_note',
         'reminder',
         'slug',
     ];

@@ -24,6 +24,7 @@ class Index extends Component
         $renew_state,
         $type_of_renew,
         $note,
+        $private_note,
         $reminder;
 
 
@@ -81,6 +82,7 @@ class Index extends Component
         $msg = [
             'check_reminder.required' => 'Select Reminder',
             'check_reminder.in' => 'Select Reminder',
+            'note.required' => 'Please add a public note.',
         ];
         $validated = $this->validate([
             'customer_id' => 'required|numeric',
@@ -90,6 +92,7 @@ class Index extends Component
             'renew_state' => 'required|string|in:to_renew,waiting_cash,renewed,deleted',
             'type_of_renew' => 'required|string|in:domain,hosting,hosting_email,wpml,privacy_cookie,other',
             'note' => 'required|string',
+            'private_note' => 'required|string',
             'check_reminder' => 'required|in:1',
             'reminder' => 'required|string|in:30_days_before,60_days_before',
         ], $msg);
@@ -110,6 +113,7 @@ class Index extends Component
                 $this->customer_id = $validated['customer_id'];
                 $this->date = $validated['date'];
                 $this->amount = $validated['amount'];
+                $this->note = $validated['note'];
                 $this->renew_state = $validated['renew_state'];
                 $this->type_of_renew = $validated['type_of_renew'];
                 $this->reminder = $validated['reminder'];
@@ -166,6 +170,7 @@ class Index extends Component
                         'type_of_renew' => $this->type_of_renew,
                         'renew_state' => $this->renew_state,
                         'date' => date('d-M-Y'),
+                        'note' => $this->note,
                         'amount' => $this->amount . ' ' . strtoupper(Admin::Currency()),
                     ];
                     //Mail To
@@ -246,6 +251,7 @@ class Index extends Component
                         'name' => $customer->name,
                         'type_of_renew' => $this->type_of_renew,
                         'renew_state' => $this->renew_state,
+                        'note' => $this->note,
                         'date' => date('d-M-Y'),
                         'amount' => $this->amount . ' ' . strtoupper(Admin::Currency()),
                     ];

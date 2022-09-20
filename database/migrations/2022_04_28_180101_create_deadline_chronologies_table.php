@@ -55,6 +55,8 @@ return new class extends Migration
 
             $table->mediumText('note')->nullable();
 
+            $table->mediumText('private_note')->nullable();
+
             $table->enum('reminder', ['30_days_before', '60_days_before'])
                 ->nullable();
 

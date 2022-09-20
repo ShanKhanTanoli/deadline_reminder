@@ -29,20 +29,7 @@ Route::get('email', function () {
 Route::get('debug', function () {
 
     $two_seconds = 1656536976;
-    
-    //dd(date('d-M-Y', 1656536976));
-    //dd(date('Y-m-d',1654114236));
 
-    //Data to Send
-    // "customer_id" => "1"
-    // "name" => "dead"
-    // "date" => "2022-05-31"
-    // "amount" => "20"
-    // "renew_state" => "to_renew"
-    // "type_of_renew" => "domain"
-    // "note" => "Renew Domain"
-    // "check_reminder" => true
-    // "reminder" => "30_days_before"
 
     dispatch(function () {
 
@@ -54,6 +41,7 @@ Route::get('debug', function () {
             'renew_state' => 'Renewed',
             'date' => date('Y-m-d'),
             'amount' => '10 EURO',
+            'note' => 'This is a Note',
         ];
 
         Mail::to($customer->email)

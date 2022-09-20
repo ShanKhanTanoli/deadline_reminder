@@ -192,12 +192,24 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="input-group input-group-static my-3">
-                                        <label for="note">Note</label>
+                                        <label for="note">Public Note (It will be sent to the Customer)</label>
                                         <textarea wire:model.defer='note' class="form-control  @error('note') is-invalid @enderror"
-                                            placeholder="Enter Note">{{ old('note') }}</textarea>
+                                            placeholder="Enter Private Note">{{ old('note') }}</textarea>
                                         @error('note')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-static my-3">
+                                        <label for="private_note">Private Note (It won't be sent to the Customer)</label>
+                                        <textarea wire:model.defer='private_note' class="form-control  @error('private_note') is-invalid @enderror"
+                                            placeholder="Enter Private Note">{{ old('private_note') }}</textarea>
+                                        @error('private_note')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>

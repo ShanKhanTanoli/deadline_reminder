@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
-    public $deadline;
+    public $deadline,$delete;
 
     public function mount($slug)
     {
@@ -35,6 +35,14 @@ class Index extends Component
         if ($customer = User::FindCustomer(Auth::user()->id, $id)) {
             return redirect(route('UserEditCustomer', $customer->slug));
         } else return session()->flash('error', 'No such customer found');
+    }
+
+    public function deleteconfirm($id)
+    {
+        if ($chronology = Deadline::FindChronology($this->deadline->id, $id)) {
+            $this->delete = $chronology;
+            $this->emit(['delete']);
+        } else return session()->flash('error', 'No such deadline found');
     }
 
     public function Delete($id)

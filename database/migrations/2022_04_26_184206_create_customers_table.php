@@ -46,6 +46,19 @@ return new class extends Migration
 
             $table->timestamps();
         });
+
+        for ($user = 2; $user < 3; $user++) {
+            for ($customer = 1; $customer < 10; $customer++) {
+                Customer::create([
+                    'user_id' => $user,
+                    'name' => 'customer' . $customer,
+                    'email' => 'customer' . $customer . '@customer.com',
+                    'address' => 'This is Address',
+                    'note' => 'This is a Note',
+                    'slug' => strtoupper(Str::random(20)),
+                ]);
+            }
+        }
     }
 
     /**

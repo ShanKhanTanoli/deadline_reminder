@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\User\Dashboard\Deadlines;
 
 use Livewire\Component;
+use App\Models\Deadline;
 use App\Helpers\User\User;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
@@ -11,34 +12,40 @@ class Index extends Component
 {
     use WithPagination;
 
-    public $delete,$renewal_state,$renewal_type,$search,$result;
+    public $delete,$renewal_state,$renewal_type,$search,$quantity = 3;
 
     protected $paginationTheme = 'bootstrap';
 
 
     public function render()
     {
-        $deadlines = $this->result = Auth::user()->deadlines;
+        $deadlines = Deadline::where('user_id',Auth::user()->id);
 
         if($this->renewal_state){
-            $deadlines = $this->result->where('renew_state',$this->renewal_state);
-            $this->reset(['renewal_type']);
+            $deadlines = $deadlines->where('renew_state',$this->renewal_state);
         }
 
         if($this->renewal_type){
-            $deadlines = $this->result->where('type_of_renew',$this->renewal_type);
-            $this->reset(['renewal_state']);
+            $deadlines = $deadlines->where('type_of_renew',$this->renewal_type);
         }
 
         if($this->search){
-            dd($this->search);
+            $deadlines = $deadlines->where('name','LIKE','%'.$this->search.'%')
+            ->orWhere('date','LIKE','%'.$this->search.'%')
+            ->orWhere('amount','LIKE','%'.$this->search.'%')
+            ->orWhere('note','LIKE','%'.$this->search.'%');
         }
 
-        $deadlines = $deadlines->take(6);
+        $deadlines = $deadlines->take($this->quantity)->latest()->get();
         return view('livewire.user.dashboard.deadlines.index')
             ->with(['deadlines' => $deadlines])
             ->extends('layouts.dashboard')
             ->section('content');
+    }
+
+    public function loadMore()
+    {
+        $this->quantity+= 3;
     }
 
     public function Edit($id)

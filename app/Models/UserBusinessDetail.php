@@ -15,6 +15,7 @@ class UserBusinessDetail extends Model
         'business_logo',
         'business_email',
         'business_phone',
+        'vat_id',
         'business_address',
         'currency_id'
     ];

@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('business_logo')->nullable();
             $table->string('business_email')->nullable();
             $table->string('business_phone')->nullable();
+            $table->string('vat_id')->nullable();
             $table->string('business_address')->nullable();
 
             //Currencies
@@ -46,6 +47,7 @@ return new class extends Migration
                 'business_name' => 'Deadline Reminder',
                 'business_email' => 'business@email.com',
                 'business_phone' => '+00000000000',
+                'vat_id' => mt_rand(10,1000),
                 'business_address' => 'This is the Address',
                 'currency_id' => 1,
             ]);

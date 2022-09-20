@@ -89,13 +89,6 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Note
                                     </th>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Customer
-                                    </th>
-                                    <th
-                                        class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
-                                        View Customer
-                                    </th>
                                     <th
                                         class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
                                         Delete
@@ -137,22 +130,22 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     @if ($chronology->renew_state == 'to_renew')
-                                                        <span class="badge bg-gradient-primary">
+                                                        <span class="to_renew">
                                                             To Renew
                                                         </span>
                                                     @endif
                                                     @if ($chronology->renew_state == 'waiting_cash')
-                                                        <span class="badge bg-gradient-primary">
+                                                        <span class="waiting_cash">
                                                             Waiting Cash
                                                         </span>
                                                     @endif
                                                     @if ($chronology->renew_state == 'renewed')
-                                                        <span class="badge bg-gradient-success">
+                                                        <span class="renewed">
                                                             Renewed
                                                         </span>
                                                     @endif
                                                     @if ($chronology->renew_state == 'deleted')
-                                                        <span class="badge bg-gradient-danger">
+                                                        <span class="deleted">
                                                             Deleted
                                                         </span>
                                                     @endif
@@ -163,32 +156,32 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     @if ($chronology->type_of_renew == 'domain')
-                                                        <span class="badge bg-gradient-primary">
+                                                        <span class="domain">
                                                             Domain
                                                         </span>
                                                     @endif
                                                     @if ($chronology->type_of_renew == 'hosting')
-                                                        <span class="badge bg-gradient-primary">
+                                                        <span class="hosting">
                                                             Hosting
                                                         </span>
                                                     @endif
                                                     @if ($chronology->type_of_renew == 'hosting_email')
-                                                        <span class="badge bg-gradient-primary">
+                                                        <span class="hosting_email">
                                                             Hosting Email
                                                         </span>
                                                     @endif
                                                     @if ($chronology->type_of_renew == 'wpml')
-                                                        <span class="badge bg-gradient-primary">
+                                                        <span class="wpml">
                                                             wpml
                                                         </span>
                                                     @endif
                                                     @if ($chronology->type_of_renew == 'privacy_cookie')
-                                                        <span class="badge bg-gradient-primary">
+                                                        <span class="privacy_cookie">
                                                             Privacy Cookie
                                                         </span>
                                                     @endif
                                                     @if ($chronology->type_of_renew == 'other')
-                                                        <span class="badge bg-gradient-dark">
+                                                        <span class="other">
                                                             other
                                                         </span>
                                                     @endif
@@ -199,45 +192,17 @@
                                             <div class="d-flex px-2 py-1">
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">
-                                                        {{ Str::substr($chronology->note, 0, 12) }}...
+                                                        {{ Str::substr($chronology->note, 0, 15) }}...
                                                     </h6>
                                                 </div>
                                             </div>
                                         </td>
                                         <td class="text-center">
-                                            <div class="d-flex px-2 py-1">
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-sm">
-                                                        @if ($customer = Customer::Find($chronology->customer_id))
-                                                            @if (strlen($customer->name) > 10)
-                                                                {{ $customer->name }}...
-                                                            @else
-                                                                {{ $customer->name }}
-                                                            @endif
-                                                        @else
-                                                            {{ __('DELETED') }}
-                                                        @endif
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center">
-                                            <button class="btn btn-sm btn-info"
-                                                wire:click='ViewCustomer("{{ $chronology->customer_id }}")'>
-                                                <span wire:loading
-                                                    wire:target='ViewCustomer("{{ $chronology->customer_id }}")'
+                                            <button class="btn" wire:click='deleteconfirm("{{ $chronology->id }}")'>
+                                                <span wire:loading wire:target='deleteconfirm("{{ $chronology->id }}")'
                                                     class="spinner-border spinner-border-sm" role="status"
                                                     aria-hidden="true"></span>
-                                                View
-                                            </button>
-                                        </td>
-                                        <td class="text-center">
-                                            <button class="btn btn-sm btn-danger"
-                                                wire:click='Delete("{{ $chronology->id }}")'>
-                                                <span wire:loading wire:target='Delete("{{ $chronology->id }}")'
-                                                    class="spinner-border spinner-border-sm" role="status"
-                                                    aria-hidden="true"></span>
-                                                Delete
+                                                <i class="fas fa-times text-danger"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -252,4 +217,188 @@
             </div>
         </div>
     </div>
+    <div class="row mt-4">
+        <!--Begin::Deadline Details-->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-lg">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                        <h6 class="text-white text-capitalize ps-3">
+                            Deadline Details
+                        </h6>
+                    </div>
+                </div>
+                <div class="card-body text-lg-start text-center mt-2">
+                    <div class="d-flex justify-content-lg-start justify-content-center p-2">
+                        <strong>Name : &nbsp; </strong>
+                        <span class=""> {!! $deadline->name !!}</span>
+                    </div>
+                    <div class="d-flex justify-content-lg-start justify-content-center p-2">
+                        <strong>Date : &nbsp; </strong>
+                        <span class=""> {{ date('d M Y', strtotime($deadline->date)) }}</span>
+                    </div>
+                    <div class="d-flex justify-content-lg-start justify-content-center p-2">
+                        <strong>Amount : &nbsp; </strong>
+                        <span class=""> {{ $deadline->amount }}
+                            {{ strtoupper(User::Currency(Auth::user()->id)) }}</span>
+                    </div>
+                    <div class="d-flex justify-content-lg-start justify-content-center p-2">
+                        <strong>Renew State : &nbsp; </strong>
+                        <span class="">
+                            @if ($deadline->renew_state == 'to_renew')
+                                <span class="to_renew">
+                                    To Renew
+                                </span>
+                            @endif
+                            @if ($deadline->renew_state == 'waiting_cash')
+                                <span class="waiting_cash">
+                                    Waiting Cash
+                                </span>
+                            @endif
+                            @if ($deadline->renew_state == 'renewed')
+                                <span class="renewed">
+                                    Renewed
+                                </span>
+                            @endif
+                            @if ($deadline->renew_state == 'deleted')
+                                <span class="deleted">
+                                    Deleted
+                                </span>
+                            @endif
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-lg-start justify-content-center p-2">
+                        <strong>Renew Type : &nbsp; </strong>
+                        <span class="">
+                            @if ($deadline->type_of_renew == 'domain')
+                                <span class="domain">
+                                    Domain
+                                </span>
+                            @endif
+                            @if ($deadline->type_of_renew == 'hosting')
+                                <span class="hosting">
+                                    Hosting
+                                </span>
+                            @endif
+                            @if ($deadline->type_of_renew == 'hosting_email')
+                                <span class="hosting_email">
+                                    Hosting Email
+                                </span>
+                            @endif
+                            @if ($deadline->type_of_renew == 'wpml')
+                                <span class="wpml">
+                                    wpml
+                                </span>
+                            @endif
+                            @if ($deadline->type_of_renew == 'privacy_cookie')
+                                <span class="privacy_cookie">
+                                    Privacy Cookie
+                                </span>
+                            @endif
+                            @if ($deadline->type_of_renew == 'other')
+                                <span class="other">
+                                    other
+                                </span>
+                            @endif
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-lg-start justify-content-center p-2">
+                        <strong>Note : &nbsp; </strong>
+                        <span class=""> {!! Str::substr($deadline->note, 0, 25) !!}</span>
+                    </div>
+                    <div class="d-flex justify-content-lg-start justify-content-center p-2">
+                        <strong>Private Note : &nbsp; </strong>
+                        <span class=""> {!! Str::substr($deadline->private_note, 0, 25) !!}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End::Deadline Details-->
+
+        <!--Begin::Customer Details-->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-lg">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                        <h6 class="text-white text-capitalize ps-3">
+                            Customer Details
+                        </h6>
+                    </div>
+                </div>
+                <div class="card-body text-lg-start text-center mt-2">
+                    @if ($customer = Customer::Find($deadline->customer_id))
+                        <div class="d-flex justify-content-lg-start justify-content-center p-2">
+                            <strong>Name : &nbsp; </strong>
+                            <span class=""> {{ Str::substr($customer->name, 0, 25) }}</span>
+                        </div>
+                        <div class="d-flex justify-content-lg-start justify-content-center p-2">
+                            <strong>Email : &nbsp; </strong>
+                            <span class=""> {{ Str::substr($customer->email, 0, 25) }}</span>
+                        </div>
+                        <div class="d-flex justify-content-lg-start justify-content-center p-2">
+                            <strong>Number : &nbsp; </strong>
+                            <span class=""> {{ Str::substr($customer->number, 0, 25) }}</span>
+                        </div>
+                        <div class="d-flex justify-content-lg-start justify-content-center p-2">
+                            <strong>Address : &nbsp; </strong>
+                            <span class=""> {{ Str::substr($customer->address, 0, 25) }}</span>
+                        </div>
+                        <div class="d-flex justify-content-lg-start justify-content-center p-2">
+                            <strong>Note : &nbsp; </strong>
+                            <span class=""> {{ Str::substr($customer->note, 0, 25) }}</span>
+                        </div>
+                    @else
+                        <span class="badge bg-gradient-danger w-100 p-3">
+                            <strong>
+                                Not Found
+                            </strong>
+                        </span>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <!--End::Customer Details-->
+    </div>
+    @if ($delete)
+        <!--Begin::Delete Modal-->
+        <div wire:ignore.self class="modal fade" id="Delete" tabindex="-1" aria-labelledby="DeleteLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h1 class="text-center mb-2">
+                            <i class="fas fa-times text-danger" style="font-size: 50px;"></i>
+                        </h1>
+                        <h3 class="text-center">Delete Deadline</h3>
+                        <p>
+                            <strong>
+                                Are you sure you want to delete this row of chronologies? the operation is not
+                                reversible.
+                            </strong>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="modal">Close</button>
+                        <button wire:click="Delete('{{ $delete->id }}')" type="button"
+                            class="btn btn-danger btn-sm">
+                            {{ __('Delete') }}
+                            <div wire:loading wire:target="Delete('{{ $delete->id }}')"
+                                class="spinner-border spinner-border-sm" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End::Delete Modal-->
+    @endif
+    @section('scripts')
+        <script>
+            Livewire.on('delete', function() {
+                $('#Delete').modal('show');
+            })
+        </script>
+    @endsection
 </div>

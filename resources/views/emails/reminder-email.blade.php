@@ -150,7 +150,6 @@
                 height: auto !important;
             }
         }
-
     </style>
     <!--[if gte mso 9]><style type=”text/css”>
         body {
@@ -177,7 +176,8 @@
     <table border="0" width="100%" cellpadding="0" cellspacing="0" bgcolor="ffffff">
         <tr>
             <td align="center">
-                <table border="0" align="center" width="590" cellpadding="0" cellspacing="0" class="container590">
+                <table border="0" align="center" width="590" cellpadding="0" cellspacing="0"
+                    class="container590">
                     <tr>
                         <td height="25" style="font-size: 25px; line-height: 25px;">&nbsp;</td>
                     </tr>
@@ -211,7 +211,8 @@
 
         <tr>
             <td align="center">
-                <table border="0" align="center" width="590" cellpadding="0" cellspacing="0" class="container590">
+                <table border="0" align="center" width="590" cellpadding="0" cellspacing="0"
+                    class="container590">
                     <tr>
                         <td align="center"
                             style="color: #343434; font-size: 24px; font-family: Quicksand, Calibri, sans-serif; font-weight:700;letter-spacing: 3px; line-height: 35px;"
@@ -248,6 +249,35 @@
                                 <tr>
                                     <td align="left"
                                         style="color: #000; font-size: 20px; font-family: 'Work Sans', Calibri, sans-serif; line-height: 24px;">
+                                        <!--Begin::If ID is available-->
+                                        @if ($id)
+                                        <!--Begin::If Custom Email is defined-->
+                                        @if($business = User::BusinessDetails($id))
+
+                                            <?php
+
+                                            $trans = array(
+
+                                            "customer_name" => $data['customer_name'],
+                                            "type_of_renew" => $data['type_of_renew'],
+                                            "renew_state" => $data['renew_state'],
+                                            "payment_date" => date('d-m-Y', strtotime($data['payment_date'])),
+                                            "payment_amount" => $data['payment_amount']
+
+                                            );
+
+                                            $result = strtr($business->email_template,$trans);
+
+                                            ?>
+
+                                            {!! $result !!}
+
+                                            <p style="line-height: 24px">
+                                                From ,<br /> The {{ Setting::Logo() }} team.
+                                            </p>
+
+                                        <!--End::If Custom Email is not defined-->
+                                        @else
                                         <!-- section text ======-->
                                         <p style="line-height: 24px; margin-bottom:15px;">
                                             Dear {!! Str::ucfirst($data['name']) !!},
@@ -256,7 +286,7 @@
                                             There is a News for you. <br />
                                             <br />
                                             Your {!! Str::ucfirst($data['type_of_renew']) !!} is
-                                            {!! Str::ucfirst($data['renew_state']) !!} at {!! date('d-m-Y',strtotime($data['date'])) !!}.
+                                            {!! Str::ucfirst($data['renew_state']) !!} at {!! date('d-m-Y', strtotime($data['date'])) !!}.
                                             The Amount is only {!! $data['amount'] !!}<br />
                                         </p>
                                         <p style="line-height: 24px;margin-bottom:15px;">
@@ -268,6 +298,33 @@
                                         <p style="line-height: 24px">
                                             From ,<br /> The {{ Setting::Logo() }} team.
                                         </p>
+                                        @endif
+                                        <!--End::If Custom Email is defined-->
+                                        @else
+                                            <!--Begin::If Custom Email is not defined Or ID is missing-->
+                                            <!-- section text ======-->
+                                            <p style="line-height: 24px; margin-bottom:15px;">
+                                                Dear {!! Str::ucfirst($data['name']) !!},
+                                            </p>
+                                            <p style="line-height: 24px;margin-bottom:15px;">
+                                                There is a News for you. <br />
+                                                <br />
+                                                Your {!! Str::ucfirst($data['type_of_renew']) !!} is
+                                                {!! Str::ucfirst($data['renew_state']) !!} at {!! date('d-m-Y', strtotime($data['date'])) !!}.
+                                                The Amount is only {!! $data['amount'] !!}<br />
+                                            </p>
+                                            <p style="line-height: 24px;margin-bottom:15px;">
+                                                <strong>
+                                                    Note :
+                                                </strong>
+                                                {!! $data['note'] !!}
+                                            </p>
+                                            <p style="line-height: 24px">
+                                                From ,<br /> The {{ Setting::Logo() }} team.
+                                            </p>
+                                            <!--End::If Custom Email is not defined Or ID is missing-->
+                                        @endif
+                                        <!--End::If ID is available-->
                                     </td>
                                 </tr>
                             </table>
@@ -282,5 +339,4 @@
     </table>
     <!-- end section -->
 </body>
-
 </html>

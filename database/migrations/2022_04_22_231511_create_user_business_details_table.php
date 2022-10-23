@@ -49,7 +49,7 @@ return new class extends Migration
                 'business_phone' => '+00000000000',
                 'vat_id' => mt_rand(10,1000),
                 'business_address' => 'This is the Address',
-                'currency_id' => 1,
+                'currency_id' => 1
             ]);
         }
     }

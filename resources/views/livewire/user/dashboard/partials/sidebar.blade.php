@@ -90,7 +90,7 @@
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Configure</h6>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white @if (Request::path() == 'User/Settings/BusinessDetails' or Request::path() == 'User/Settings/Profile' or Request::path() == 'User/Settings/Password') active bg-gradient-primary @else '' @endif"
+                <a class="nav-link text-white @if (Request::path() == 'User/Settings/BusinessDetails' or Request::path() == 'User/Settings/Profile' or Request::path() == 'User/Settings/Password' OR Request::path() == 'User/Settings/MyEmail') active bg-gradient-primary @else '' @endif"
                     href="{{ route('UserEditBusinessDetails') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="fas fa-cog"></i>

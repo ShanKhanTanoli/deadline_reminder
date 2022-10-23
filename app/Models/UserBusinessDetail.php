@@ -17,6 +17,7 @@ class UserBusinessDetail extends Model
         'business_phone',
         'vat_id',
         'business_address',
-        'currency_id'
+        'currency_id',
+        'email_template'
     ];
 }

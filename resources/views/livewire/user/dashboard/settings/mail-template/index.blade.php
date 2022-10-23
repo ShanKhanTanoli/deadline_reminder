@@ -19,15 +19,34 @@
                         </div>
                         <div class="card-body px-0 pb-2">
                             <div class="container">
-                                <form method="POST" action="{{ route('UserSaveEmailTemplate') }}">
-                                    @csrf
+                                <!--Begin::Info tag-->
+                                <div class="alert alert-info text-white fade show" role="alert">
+                                    <span class="alert-icon align-middle">
+                                      <i class="fas fa-info-circle"></i>
+                                    </span>
+                                    <span class="alert-text text-white">
+                                        Please use these keywords
+                                        (
+                                        <code class="text-white">customer_name</code> ,
+                                        <code class="text-white">type_of_renew</code> ,
+                                        <code class="text-white">renew_state</code> ,
+                                        <code class="text-white">payment_date</code> ,
+                                        <code class="text-white">payment_amount</code>
+                                        )
+                                        in the Email.
+                                    </span>
+                                </div>
+                                <!--Begin::Info tag-->
+                                <form wire:submit.prevent='Update'>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="input-group input-group-static my-3">
-                                                <textarea name="mail_template" class="summernote form-control  @error('mail_template') is-invalid @enderror"
-                                                    placeholder="Email Template">{{ old('mail_template') }}</textarea>
-                                                @error('mail_template')
-                                                    <span class="invalid-feedback" role="alert">
+                                            <div wire:ignore class="input-group input-group-static my-3">
+                                                <textarea id="email_template" wire:model.defer='email_template' name="email_template"
+                                                    class="summernote form-control  @error('email_template') is-invalid @enderror" placeholder="Email Template">{{ old('email_template') }}</textarea>
+                                            </div>
+                                            <div class="mt-2 mb-2">
+                                                @error('email_template')
+                                                    <span class="invalid-feedback" style="display: block;" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
@@ -36,9 +55,15 @@
                                     </div>
                                     <div class="row mt-2">
                                         <div class="col-md-6">
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary" wire:attr='disabled'>
+                                                <span wire:target='Update' wire:loading
+                                                    class="spinner-border spinner-border-sm" role="status"
+                                                    aria-hidden="true"></span>
                                                 Save Changes
                                             </button>
+                                            <a target="_blank" href="{{ route('viewemail') }}" class="btn btn-info">
+                                                View Template
+                                            </a>
                                         </div>
                                     </div>
                                 </form>
@@ -68,11 +93,11 @@
                         ['color', ['color']],
                         ['para', ['ul', 'ol', 'paragraph']],
                         ['table', ['table']],
-                        ['view', ['fullscreen', 'codeview', ]]
+                        // ['view', ['fullscreen', 'codeview', ]]
                     ],
                     callbacks: {
                         onChange: function(contents, $editable) {
-                            @this.set('description', contents);
+                            @this.set('email_template', contents);
                         }
                     }
                 });

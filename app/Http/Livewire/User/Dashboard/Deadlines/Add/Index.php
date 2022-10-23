@@ -175,7 +175,7 @@ class Index extends Component
                     ];
                     //Mail To
                     Mail::to($customer->email)
-                        ->send(new Reminder($data));
+                        ->send(new Reminder($data,Auth::user()->id));
                     //Delay
                 })->delay(now()->addDays($this->reminder));
 
@@ -257,7 +257,7 @@ class Index extends Component
                     ];
                     //Mail To
                     Mail::to($customer->email)
-                        ->send(new Reminder($data));
+                        ->send(new Reminder($data,Auth::user()->id));
                     //Delay
                 })->delay(now()->addDays($this->reminder));
 

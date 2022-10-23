@@ -12,15 +12,17 @@ class Reminder extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $data = [];
+    public $id;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($data,$id)
     {
         $this->data = $data;
+        $this->id = $id;
     }
 
     /**

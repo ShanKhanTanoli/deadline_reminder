@@ -2,11 +2,23 @@
 
 namespace App\Http\Livewire\User\Dashboard\Settings\MailTemplate;
 
+use App\Models\Setting;
 use Livewire\Component;
+use App\Helpers\User\User;
+use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
-    public $mail_template;
+    public $email_template;
+
+    public function mount()
+    {
+        if ($details = User::BusinessDetails(Auth::user()->id)) {
+            $this->email_template = $details->email_template;
+        } else {
+            $this->email_template = "Write something for email template";
+        }
+    }
 
     public function render()
     {
@@ -18,9 +30,14 @@ class Index extends Component
     public function Update()
     {
         $validated = $this->validate([
-            'mail_template' => 'required|string',
+            'email_template' => 'required|string',
         ]);
-
-        dd($validated);
+        if ($details = User::BusinessDetails(Auth::user()->id)) {
+            $details->update($validated);
+            session()->flash('success', 'Updated Successfully');
+            return redirect(route('UserEditMailTemplate'));
+        } else {
+            return session()->flash('error', 'Something went wrong');
+        }
     }
 }

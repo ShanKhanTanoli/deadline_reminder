@@ -98,9 +98,6 @@ Route::middleware(['auth', 'user'])->prefix('User')->group(function () {
     Route::get('Settings/MyEmail', EditMailTemplate::class)
         ->name('UserEditMailTemplate');
 
-    Route::post('UserSaveEmailTemplate', [UserController::class,'UserSaveEmailTemplate'])
-        ->name('UserSaveEmailTemplate');
-
     Route::get('Settings/Password', EditPassword::class)
         ->name('UserEditPassword');
     /*End::Settings*/

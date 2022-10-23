@@ -12,40 +12,52 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Auth\VerifyEmail;
 use App\Http\Livewire\Auth\ResetPassword;
 use App\Http\Livewire\Auth\ForgotPassword;
+use App\Models\Setting;
 
 //Auth::routes();
 
 
 Route::get('email', function () {
 
+
     $data = [
-        'name' => 'shankhan',
-        'type_of_renew' => 'Domain',
-        'renew_state' => 'Renewed',
+
+        'customer_name' => 'customer_name',
+        'type_of_renew' => 'type_of_renew',
+        'renew_state' => 'renew_state',
+        'payment_date' => date('Y-m-d'),
+        'payment_amount' => 'payment_amount'
+
     ];
-    return view('emails.reminder-email', compact('data'));
-});
+
+    return view('emails.reminder-email')
+    ->with([
+        'data' => $data,
+        'id' => 2
+    ]);
+
+})->name('viewemail');
+
+
 
 Route::get('debug', function () {
 
     $two_seconds = 1656536976;
-
 
     dispatch(function () {
 
         $customer = Customer::find(1);
 
         $data = [
-            'name' => $customer->name,
+            'customer_name' => 'Shan Khan',
             'type_of_renew' => 'Hosting',
             'renew_state' => 'Renewed',
-            'date' => date('Y-m-d'),
-            'amount' => '10 EURO',
-            'note' => 'This is a Note',
+            'payment_date' => date('Y-m-d'),
+            'payment_amount' => '10 EURO'
         ];
 
         Mail::to($customer->email)
-        ->send(new Reminder($data));
+        ->send(new Reminder($data,2));
 
     })->delay(now()->addSeconds(2));
 
